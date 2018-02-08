@@ -1,35 +1,23 @@
-<!DOCTYPE html>
-<html>
-<body>
-
 <?php
-class Database
-{ 
-private $servername = "localhost";
-private $username = "";
-private $password = "";
+$servername = "localhost";
+$username ="root";
+$password = "";
+$dbname = "printful";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password,$dbname);
+// Check 
 
-    public function connect()
-    {
-$conn = new mysqli();
-
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
-echo "Connected successfully";
-    }
-    public function disconnect()    {   }
-    public function select()        {   }
-    public function insert()        {   }
-    public function delete()        {   }
-    public function update()    {   }
+else
+{
+	echo "Connected successfully";
 }
-$testObject = new Database();
-$testObject->connect();
 
-?> 
-
-</body>
-</html>
+$sql = "SELECT id FROM persons_table";
+$result = $conn->query($sql);
+print_r($result);
+$conn->close();
+?>
