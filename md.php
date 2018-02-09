@@ -37,7 +37,7 @@ $first_name=$_POST['Name'];
 
  echo $first_name;
  
-$sql = "INSERT INTO persons_table (Name) VALUES (".$first_name.");";
+$sql = "INSERT INTO persons_table (Name) VALUES ('".$first_name."');";
 $conn->query($sql)
 //Execute the query
  
