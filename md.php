@@ -16,11 +16,22 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='printful' AND `TABLE_NAME`='tests_table'";
+$sql = "SELECT TestName  FROM tests_list_table;";
 $result = $conn->query($sql);
 echo "Result:";
-print_r($result);
+  //print_r($result);
 
+if ($result->num_rows > 0) {
+	echo "good!";
+	while($row = $result->fetch_assoc()) {
+        echo $row["TestName"];
+    }
+}
+  /*  echo "<table><tr><th>ID</th><th>Name</th></tr>";
+    // output data of each row
+    */
+    //echo "</table>";
+//($row = $res
 
 ///
 
