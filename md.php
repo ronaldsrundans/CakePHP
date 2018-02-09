@@ -16,18 +16,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-
-$sql = "SELECT id,Name FROM persons_table";
+$sql = "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='printful' AND `TABLE_NAME`='tests_table'";
 $result = $conn->query($sql);
-///print_r($result);
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "id: " . $row["id"]. "<br>";
-    }
-} else {
-    echo "0 results";
-}
+echo "Result:";
+print_r($result);
+
 
 ///
 
@@ -58,5 +51,13 @@ $conn->query($sql)
 <input type="submit" value="Sākt">
 </form>
 <h3>Izvēlies testu</h3>
+
+<select>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+
 </body>
 </html>
