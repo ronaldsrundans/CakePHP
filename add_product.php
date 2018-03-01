@@ -23,9 +23,7 @@ Product add
 <p>Price
 <input type="text" name="Price" >
 </p>
-<p>
-Type sitcher
-</p>
+
 <form>
 <select id="sel" onchange="showUser(this.value)" >
 <option value="">Type sitcher</option>
@@ -42,7 +40,7 @@ Book
 </form>
 
 
-<div id="txtHint"><b>Person info will be listed here.</b></div>
+<div id="txtHint"><b></b></div>
 
 <p id="demo"></p>
 <script>
