@@ -1,0 +1,136 @@
+<?php include("product_class.php");
+$servername = "localhost";
+$username ="root";
+$password = "";
+$dbname = "scand";
+
+$conn = new mysqli($servername, $username, $password,$dbname);
+// Check 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+  //$sql = "INSERT INTO persons_table (Name) VALUES ('".$first_name."');";
+$name=$sku=$price= $type="";
+//if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$name=fillVar("name");
+$sku=fillVar("sku");
+$price=fillVar("price");
+if(isset($_POST['typeselect'])){
+
+	$sql="INSERT INTO product (SKU, NAME, PRICE, TYPE) VALUES 
+	(".$sku.",4,5,6)";
+	
+	
+//VALUES(".$name.",".$sku.",".$price.",".$typeselect.")";
+//$AddMCResult = mysql_query($AddMCQ,$link);
+
+$conn->query($sql);
+	//echo "ok";
+}
+
+/*
+
+*/
+function fillVar($nameVar){
+	if (empty($_POST[$nameVar])) {
+		//$z=0;
+	}
+	else
+	{
+		//$z=1;
+		//return test_input($_POST[$nameVar]);
+		return $_POST[$nameVar];
+	}
+}
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<h2>
+Product add
+</h2>
+</p>
+
+<p>
+</head>
+<body>
+
+<form  method="post">
+<input type="submit" value="Save" name="Save">
+<p>SKU
+<input type="text" name="sku" required>
+</p>
+<p>Name
+<input type="text" name="name" required>
+</p>
+
+<p>Price
+<input type="text" name="price" required>
+</p>
+<p>
+Type sitcher
+
+
+<select required name="typeselect" onchange="showUser(this.value)">
+<option value="">Type sitcher</option>
+<option value=1>
+DVD
+</option>
+<option value=2>
+Furniture
+</option>
+<option value=3>
+Book
+</option>
+</select>
+</form>
+</p>
+
+<div id="txtHint"><b></b></div>
+
+<p id="demo"></p>
+<script>
+function myFunction() {
+    var x = document.getElementById("typeselect");
+	//echo x;
+    var i = x.selectedIndex;
+	
+    document.getElementById("demo").innerHTML = i;
+
+}
+function showUser(str) {
+  if (str=="") {
+    document.getElementById("txtHint").innerHTML="";
+    return;
+  } 
+  
+  if (window.XMLHttpRequest) {
+    xmlhttp=new XMLHttpRequest();
+  } 
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("txtHint").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","getuser.php?q="+str,true);
+  xmlhttp.send();
+}
+
+</script>
+</form>
+<?php
+echo "<h2>Your Input:</h2>";
+echo $name;
+echo "<br>";
+echo $sku;
+echo "<br>";
+echo $price;
+echo "<br>";
+echo $type;
+
+?>
+
+</body>
+</html>
