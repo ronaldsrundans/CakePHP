@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<h1>Product list</h1>
+
+<html>
+
+</head>
+<body>
+
+<?php
+$con = mysqli_connect('localhost','root','','scand');
+if (!$con) {
+    die('Could not connect: ' . mysqli_error($con));
+}
+
+
+//mysqli_select_db($con,"ajax_demo");
+$sql="SELECT * FROM product";
+/*$sql="SELECT product.name, product.sku, product.price FROM product
+WHERE EXISTS (SELECT furniture.width, furniture.lenght, furniture.height  FROM
+ furniture WHERE product.sku = furniture.sku OR
+  SELECT dvd.size  FROM dvd WHERE product.sku = dvd.sku OR
+   SELECT book.weight FROM dvd WHERE product.sku = book.sku
+ );";
+"SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM 
+WHERE EXISTS (SELECT ProductName FROM Products WHERE SupplierId = Suppliers.supplierId AND Price = 22);
+INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;*/
+$result = mysqli_query($con,$sql);
+print_r($result);
+//<input type= 'checkbox' name= 'check' value='check'> Delete<br>
+echo "
+
+<table>
+<tr>
+<th>SKU</th>
+<th>Name</th>
+<th>Price</th>
+
+<th>Delete</th>
+</tr>";
+
+while($row = mysqli_fetch_array($result)) {
+    echo "<tr>";
+    echo "<td>" . $row['SKU'] . "</td>";
+    echo "<td>" . $row['NAME'] . "</td>";
+    echo "<td>" . $row['PRICE'] . "</td>";
+   
+	echo "<td><input type= 'checkbox' "."</td>";
+    //echo "<td>" . $row['Job'] . "</td>";
+    echo "</tr>";
+}
+echo "</table>";
+mysqli_close($con);
+?>
+</body>
+</html>
+
+</body>
+</html>
