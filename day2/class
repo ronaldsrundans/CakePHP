@@ -1,0 +1,44 @@
+<?php
+$servername = "localhost";
+$username ="root";
+$password = "";
+$dbname = "scand";
+
+$conn = new mysqli($servername, $username, $password,$dbname);
+// Check 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+else
+{
+	echo "OK";
+}
+class Product{
+public $SKU;
+public $Name;
+public $Price;
+
+
+
+}
+class Furniture extends Product
+{
+	public $Width;
+	public $Height;
+	public $Length
+
+}
+class Book extends Product
+{
+	public $SKU;
+public $Name;
+public $Price;
+}
+class DVD extends Product
+{
+	public $SKU;
+public $Name;
+public $Price;
+}
+
+?>
