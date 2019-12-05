@@ -3,22 +3,31 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$man =$name = $freq = $mem = $type = "";
-$man_err =$name_err = $freq_err = $mem_err = $type_err = "";
+$man = $name = $freq = $model = $socket = $cache = $cores = $threads = $year = "";
+$man_err =$name_err = $freq_err = $model_err = $socket_err = $cache_err = $cores_err = $threads_err = $year_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  	$input_man = trim($_POST["man"]);
 	$input_name = trim($_POST["name"]);
-	$input_mem = trim($_POST["mem"]);
+	$input_model = trim($_POST["model"]);
     $input_freq = trim($_POST["freq"]);
-	$input_type = trim($_POST["type"]);
+	$input_cache = trim($_POST["cache"]);
+    $input_socket = trim($_POST["socket"]);
+	$input_cores = trim($_POST["cores"]);
+	$input_threads = trim($_POST["threads"]);
+	$input_year = trim($_POST["year"]);
 	
 	$man = $input_man;
 	$name = $input_name;
-	$mem = $input_mem;
+	$model = $input_model;
 	$freq = $input_freq;
-	$type = $input_type;
+	$socket = $input_socket;
+	$cache = $input_cache;
+	$cores = $input_cores;
+	$threads = $input_threads;
+	$year = $input_year;
+	
     // Validate name
 	/*
     $input_name = trim($_POST["name"]);
@@ -51,20 +60,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     */
     // Check input errors before inserting in database
-    if(empty($name_err) && empty($man_err) && empty($mem_err)&& empty($freq_err)&& empty($type_err)){
+    if(empty($name_err) && empty($man_err) && empty($model_err)&& empty($freq_err) && empty($socket_err)&& empty($cores_err)&& empty($threads_err)&& empty($year_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO RAM (man, name, freq, mem, type) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO CPU (man, name, model, cache, freq, socket, cores, threads, year) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_man, $param_name, $param_freq, $param_mem, $param_type);
+            mysqli_stmt_bind_param($stmt, "sssssssss", $param_man, $param_name, $param_model, $param_cache, $param_freq, $param_socket, $param_cores, $param_threads, $param_year);
             
             // Set parameters
             $param_man = $man;
             $param_name = $name;
+			$param_model = $model;
             $param_freq = $freq;
-			$param_mem = $mem;
-            $param_type = $type;
+			$param_cores = $cores;
+            $param_threads = $threads;
+			$param_socket = $socket;
+            $param_year = $year;
+			$param_cache = $cache;
+            
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -114,25 +128,46 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <span class="help-block"><?php echo $man_err;?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
-                            <label>Model</label>
+                            <label>Name</label>
                             <input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
                             <span class="help-block"><?php echo $name_err;?></span>
+                        </div>
+						<div class="form-group <?php echo (!empty($model_err)) ? 'has-error' : ''; ?>">
+                            <label>Model</label>
+                            <input type="text" name="name" class="form-control" value="<?php echo $model; ?>">
+                            <span class="help-block"><?php echo $model_err;?></span>
+                        </div>
+					    <div class="form-group <?php echo (!empty($cache_err)) ? 'has-error' : ''; ?>">
+                            <label>Cache size</label>
+                            <input type="text" name="mem" class="form-control" value="<?php echo $cache; ?>">
+                            <span class="help-block"><?php echo $cache_err;?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($freq_err)) ? 'has-error' : ''; ?>">
                             <label>Frequency</label>
                             <input type="text" name="freq" class="form-control" value="<?php echo $freq; ?>">
                             <span class="help-block"><?php echo $freq_err;?></span>
                         </div>
-						  <div class="form-group <?php echo (!empty($mem_err)) ? 'has-error' : ''; ?>">
-                            <label>Memory size</label>
-                            <input type="text" name="mem" class="form-control" value="<?php echo $mem; ?>">
-                            <span class="help-block"><?php echo $mem_err;?></span>
+						 <div class="form-group <?php echo (!empty($socket_err)) ? 'has-error' : ''; ?>">
+                            <label>Socket</label>
+                            <input type="text" name="type" class="form-control" value="<?php echo $socket; ?>">
+                            <span class="help-block"><?php echo $socket_err;?></span>
                         </div>
-						  <div class="form-group <?php echo (!empty($type_err)) ? 'has-error' : ''; ?>">
-                            <label>Memory type</label>
-                            <input type="text" name="type" class="form-control" value="<?php echo $type; ?>">
-                            <span class="help-block"><?php echo $type_err;?></span>
+						  <div class="form-group <?php echo (!empty($cores_err)) ? 'has-error' : ''; ?>">
+                            <label>Cores</label>
+                            <input type="text" name="mem" class="form-control" value="<?php echo $cores; ?>">
+                            <span class="help-block"><?php echo $cores_err;?></span>
                         </div>
+						  <div class="form-group <?php echo (!empty($threads_err)) ? 'has-error' : ''; ?>">
+                            <label>Threads</label>
+                            <input type="text" name="mem" class="form-control" value="<?php echo $threads; ?>">
+                            <span class="help-block"><?php echo $threads_err;?></span>
+                        </div>
+						  <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                            <label>Years</label>
+                            <input type="text" name="mem" class="form-control" value="<?php echo $year; ?>">
+                            <span class="help-block"><?php echo $year_err;?></span>
+                        </div>
+						 
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-default">Cancel</a>
                     </form>
