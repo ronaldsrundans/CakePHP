@@ -134,12 +134,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
 						<div class="form-group <?php echo (!empty($model_err)) ? 'has-error' : ''; ?>">
                             <label>Model</label>
-                            <input type="text" name="name" class="form-control" value="<?php echo $model; ?>">
+                            <input type="text" name="model" class="form-control" value="<?php echo $model; ?>">
                             <span class="help-block"><?php echo $model_err;?></span>
                         </div>
 					    <div class="form-group <?php echo (!empty($cache_err)) ? 'has-error' : ''; ?>">
                             <label>Cache size</label>
-                            <input type="text" name="mem" class="form-control" value="<?php echo $cache; ?>">
+                            <input type="text" name="cache" class="form-control" value="<?php echo $cache; ?>">
                             <span class="help-block"><?php echo $cache_err;?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($freq_err)) ? 'has-error' : ''; ?>">
@@ -149,22 +149,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
 						 <div class="form-group <?php echo (!empty($socket_err)) ? 'has-error' : ''; ?>">
                             <label>Socket</label>
-                            <input type="text" name="type" class="form-control" value="<?php echo $socket; ?>">
+                            <input type="text" name="socket" class="form-control" value="<?php echo $socket; ?>">
                             <span class="help-block"><?php echo $socket_err;?></span>
                         </div>
 						  <div class="form-group <?php echo (!empty($cores_err)) ? 'has-error' : ''; ?>">
                             <label>Cores</label>
-                            <input type="text" name="mem" class="form-control" value="<?php echo $cores; ?>">
+                            <input type="text" name="cores" class="form-control" value="<?php echo $cores; ?>">
                             <span class="help-block"><?php echo $cores_err;?></span>
                         </div>
 						  <div class="form-group <?php echo (!empty($threads_err)) ? 'has-error' : ''; ?>">
                             <label>Threads</label>
-                            <input type="text" name="mem" class="form-control" value="<?php echo $threads; ?>">
+                            <input type="text" name="threads" class="form-control" value="<?php echo $threads; ?>">
                             <span class="help-block"><?php echo $threads_err;?></span>
                         </div>
 						  <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
                             <label>Years</label>
-                            <input type="text" name="mem" class="form-control" value="<?php echo $year; ?>">
+                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
                             <span class="help-block"><?php echo $year_err;?></span>
                         </div>
 						 
