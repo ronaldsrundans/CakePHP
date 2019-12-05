@@ -3,7 +3,7 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$man = $name = $freq = $model = $socket = $cache = $cores = $threads = $year = "";
+$man=$name=$freq=$model=$socket=$cache=$cores=$threads=$year="";
 $man_err =$name_err = $freq_err = $model_err = $socket_err = $cache_err = $cores_err = $threads_err = $year_err = "";
  
 // Processing form data when form is submitted
@@ -66,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssssssss", $param_man, $param_name, $param_model, $param_cache, $param_freq, $param_socket, $param_cores, $param_threads, $param_year);
+            mysqli_stmt_bind_param($stmt,"sssssssss",$param_man,$param_name,$param_model, $param_cache, $param_freq, $param_socket, $param_cores, $param_threads, $param_year);
             
             // Set parameters
             $param_man = $man;
@@ -103,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Record</title>
+    <title>Create CPU Record</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -118,9 +118,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Create Record</h2>
+                        <h2>Create CPU Record</h2>
                     </div>
-                    <p>Please fill this form and submit to add RAM record to the database.</p>
+                    <p>Please fill this form and submit to add CPU record to the database.</p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group <?php echo (!empty($man_err)) ? 'has-error' : ''; ?>">
                             <label>Manufacturer</label>
