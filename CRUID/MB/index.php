@@ -38,7 +38,7 @@
                     require_once "config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT t1.reg_date AS t1reg_date, t1.name AS t1name,t1.man AS t1man, t1.ramid AS t1ramid, t2.name as t2name FROM MOTHER t1 INNER JOIN RAM t2 ON t1.ramid=t2.id";
+                    $sql = "SELECT t1.id AS t1id, t1.reg_date AS t1reg_date, t1.name AS t1name,t1.man AS t1man, t1.ramid AS t1ramid, t2.name as t2name FROM MOTHER t1 INNER JOIN RAM t2 ON t1.ramid=t2.id";
                     
 					if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
@@ -48,7 +48,7 @@
                                         echo "<th>#</th>";
                                         echo "<th>Manufacturer</th>";
                                         echo "<th>Model</th>";
-                                        //echo "<th>RAM id</th>";
+                                        echo "<th>RAM id</th>";
                                         echo "<th>Total RAM</th>";
 										echo "<th>RAM Model</th>";
 										echo "<th>Last changes</th>";
@@ -58,17 +58,17 @@
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
+                                        echo "<td>" . $row['t1id'] . "</td>";
                                         echo "<td>" . $row['t1man'] . "</td>";
                                         echo "<td>" . $row['t1name'] . "</td>";
-                                        //echo "<td>" . $row['t1ramid'] . "</td>";
+                                        echo "<td>" . $row['t1ramid'] . "</td>";
 										echo "<td>" . $row['t2id'] . "</td>";
 										echo "<td>" . $row['t2name'] . "</td>";
 										echo "<td>" . $row['t1reg_date'] . "</td>";
                                         echo "<td>";
-                                            echo "<a href='read.php?id=". $row['t1.id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            echo "<a href='update.php?id=". $row['t1.id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['t1.id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                            echo "<a href='read.php?id=". $row['t1id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                            echo "<a href='update.php?id=". $row['t1id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            echo "<a href='delete.php?id=". $row['t1id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }
