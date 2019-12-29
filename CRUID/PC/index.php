@@ -40,8 +40,13 @@
                     // Attempt select query execution
                    //t1=PC
 				   //t2=cpu
-				   //t3=ram
-				    $sql = "SELECT t1.pcid, t2.cpuname, t2.cpumodel, t2.cpuman, t3.gpuman, t3.gpuname, t4.ramman FROM PC AS t1 INNER JOIN CPU AS t2 on t1.pccpuid=t2.cpuid INNER JOIN GPU AS t3 on t1.pcgpuid=t3.gpuid INNER JOIN RAM AS t4 on t1.pcramid=t4.ramid";
+				   //t3=gpu
+				   //t4=ram
+				   //t5=os
+				   //t6=motherboard
+				   //t7=hdd
+				   //t8=ssd
+				    $sql = "SELECT t1.pcid, t1.pcpsu, t1.pcdate, t2.cpuname, t2.cpumodel, t2.cpuman, t3.gpuman, t3.gpuname, t4.ramman, t5.osname, t6.motherman, t6.mothername, t7.hddman, t7.hddmodel, t7.hddmem, t8.ssdman, t8.ssdmodel, t8.ssdmem FROM PC AS t1 INNER JOIN CPU AS t2 on t1.pccpuid=t2.cpuid INNER JOIN GPU AS t3 on t1.pcgpuid=t3.gpuid INNER JOIN RAM AS t4 on t1.pcramid=t4.ramid INNER JOIN OS AS t5 on t1.pcosid=t5.osid INNER JOIN MOTHER AS t6 on t1.pcmotherid=t6.motherid INNER JOIN HDD AS t7 on t1.pchddid=t7.hddid INNER JOIN SSD AS t8 on t1.pcssdid=t8.ssdid";
 					//SELECT e.first_name, e.last_name, u.user_type, u.username FROM `employee` AS e INNER JOIN `user` AS u ON e.id = u.employee_id;
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
@@ -66,14 +71,14 @@
                                     echo "<tr>";
                                         echo "<td>" . $row['pcid'] . "</td>";
                                         echo "<td>" . $row['cpuman'] ." ".$row['cpuname']." ".$row['cpumodel']."</td>";
-                                        echo "<td>" . $row['motherid'] . "</td>";
+                                        echo "<td>" . $row['mothername'] . "</td>";
 										echo "<td>" . $row['ramman'] . "</td>";
 										echo "<td>" . $row['gpuman'] ." ".$row['gpuname']."</td>";
-										echo "<td>" . $row['name'] . "</td>";
-										echo "<td>" . $row['ssd'] . "</td>";
-										echo "<td>" . $row['hdd'] . "</td>";
-										echo "<td>" . $row['psu'] . "</td>";
-                             			echo "<td>" . $row['reg_date'] . "</td>";
+										echo "<td>" . $row['osname'] . "</td>";
+										echo "<td>" . $row['ssdman'] ." ".$row['ssdmodel']." ".$row['ssdmem']. "</td>";
+										echo "<td>" . $row['hddman'] ." ".$row['hddmodel']." ".$row['hddmem']. "</td>";
+										echo "<td>" . $row['pcpsu'] . "</td>";
+                             			echo "<td>" . $row['pcdate'] . "</td>";
                                         echo "<td>";
                                             echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
                                             echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
