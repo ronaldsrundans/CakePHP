@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($name_err) && empty($man_err) && empty($model_err)&& empty($freq_err) && empty($socket_err)&& empty($cores_err)&& empty($threads_err)&& empty($year_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO CPU (man, name, model, cache, freq, socket, cores, threads, year) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO CPU (cpuman, cpuname, cpumodel, cpucache, cpufreq, cpusocket, cpucores, cputhreads, cpuyear) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
