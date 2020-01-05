@@ -54,7 +54,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Check input errors before inserting in database
     if(empty($name_err) && empty($man_err) && empty($freq_err)&& empty($mem_err)&& empty($type_err)){
         // Prepare an update statement
-        $sql = "UPDATE RAM SET man=?, name=?, mem=?, freq=?, type=? WHERE id=?";
+        $sql = "UPDATE RAM SET ramman=?, ramname=?, rammem=?, ramfreq=?, ramtype=? WHERE ramid=?";
         if($stmt = mysqli_prepare($link, $sql)){
 		
             // Bind variables to the prepared statement as parameters
@@ -92,7 +92,7 @@ else{
         $id =  trim($_GET["id"]);
         
         // Prepare a select statement
-        $sql = "SELECT * FROM RAM WHERE id = ?";
+        $sql = "SELECT * FROM RAM WHERE ramid = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "i", $param_id);
@@ -109,11 +109,11 @@ else{
                     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                     
                     // Retrieve individual field value
-                    $man = $row["man"];
-					$name = $row["name"];
-					$mem = $row["mem"];
-					$freq = $row["freq"];
-					$type = $row["type"];
+                    $man = $row["ramman"];
+					$name = $row["ramname"];
+					$mem = $row["rammem"];
+					$freq = $row["ramfreq"];
+					$type = $row["ramtype"];
                   
                 } else{
                     // URL doesn't contain valid id. Redirect to error page
