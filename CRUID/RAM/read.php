@@ -5,7 +5,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "config.php";
     
     // Prepare a select statement
-    $sql = "SELECT * FROM RAM WHERE id = ?";
+    $sql = "SELECT * FROM RAM WHERE ramid = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -23,11 +23,11 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 
                 // Retrieve individual field value
-                $name = $row["name"];
-                $man = $row["man"];
-                $type = $row["type"];
-				$mem = $row["mem"];
-                $freq = $row["freq"];
+                $name = $row["ramname"];
+                $man = $row["ramman"];
+                $type = $row["ramtype"];
+				$mem = $row["rammem"];
+                $freq = $row["ramfreq"];
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: error.php");
@@ -73,27 +73,27 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                     </div>
 					<div class="form-group">
                         <label>Manufacturer</label>
-                        <p class="form-control-static"><?php echo $row["man"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["ramman"]; ?></p>
                     </div>
                     <div class="form-group">
                         <label>Model</label>
-                        <p class="form-control-static"><?php echo $row["name"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["ramname"]; ?></p>
                     </div>
 					<div class="form-group">
                         <label>Memory size</label>
-                        <p class="form-control-static"><?php echo $row["mem"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["rammem"]; ?></p>
                     </div>
 					<div class="form-group">
                         <label>Memory frequency</label>
-                        <p class="form-control-static"><?php echo $row["freq"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["ramfreq"]; ?></p>
                     </div>
                     <div class="form-group">
                         <label>Memory type</label>
-                        <p class="form-control-static"><?php echo $row["type"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["ramtype"]; ?></p>
                     </div>
 					<div class="form-group">
                         <label>Last changes</label>
-                        <p class="form-control-static"><?php echo $row["reg_date"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["ramdate"]; ?></p>
                     </div>
                     <p><a href="index.php" class="btn btn-primary">Back</a></p>
                 </div>
