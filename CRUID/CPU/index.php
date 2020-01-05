@@ -61,21 +61,21 @@
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['man'] . "</td>";
-                                        echo "<td>" . $row['name'] . "</td>";
-                                        echo "<td>" . $row['model'] . "</td>";
-										echo "<td>" . $row['cache'] . "</td>";
-										echo "<td>" . $row['freq'] . "</td>";
-										echo "<td>" . $row['socket'] . "</td>";
-										echo "<td>" . $row['cores'] . "</td>";
-										echo "<td>" . $row['threads'] . "</td>";
-										echo "<td>" . $row['year'] . "</td>";
-										echo "<td>" . $row['reg_date'] . "</td>";
+                                        echo "<td>" . $row['cpuid'] . "</td>";
+                                        echo "<td>" . $row['cpuman'] . "</td>";
+                                        echo "<td>" . $row['cpuname'] . "</td>";
+                                        echo "<td>" . $row['cpumodel'] . "</td>";
+										echo "<td>" . $row['cpucache'] . "</td>";
+										echo "<td>" . $row['cpufreq'] . "</td>";
+										echo "<td>" . $row['cpusocket'] . "</td>";
+										echo "<td>" . $row['cpucores'] . "</td>";
+										echo "<td>" . $row['cputhreads'] . "</td>";
+										echo "<td>" . $row['cpuyear'] . "</td>";
+										echo "<td>" . $row['cpudate'] . "</td>";
                                         echo "<td>";
-                                            echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                            echo "<a href='read.php?id=". $row['cpuid'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                            echo "<a href='update.php?id=". $row['cpuid'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            echo "<a href='delete.php?id=". $row['cpuid'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }
