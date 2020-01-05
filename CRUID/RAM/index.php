@@ -57,17 +57,17 @@
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['man'] . "</td>";
-                                        echo "<td>" . $row['name'] . "</td>";
-                                        echo "<td>" . $row['mem'] . "</td>";
-										echo "<td>" . $row['freq'] . "</td>";
-										echo "<td>" . $row['type'] . "</td>";
-										echo "<td>" . $row['reg_date'] . "</td>";
+                                        echo "<td>" . $row['ramid'] . "</td>";
+                                        echo "<td>" . $row['ramman'] . "</td>";
+                                        echo "<td>" . $row['ramname'] . "</td>";
+                                        echo "<td>" . $row['rammem'] . "</td>";
+										echo "<td>" . $row['ramfreq'] . "</td>";
+										echo "<td>" . $row['ramtype'] . "</td>";
+										echo "<td>" . $row['ramdate'] . "</td>";
                                         echo "<td>";
-                                            echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                            echo "<a href='read.php?id=". $row['ramid'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                            echo "<a href='update.php?id=". $row['ramid'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            echo "<a href='delete.php?id=". $row['ramid'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }
