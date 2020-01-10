@@ -60,7 +60,7 @@
                                         echo "<td>" . $row['hddman'] . "</td>";
                                         echo "<td>" . $row['hddmodel'] . "</td>";
 										echo "<td>" . $row['hddmem'] . "</td>";
-							
+										echo "<td>" . $row['hddstatus'] . "</td>";
 										echo "<td>" . $row['hdddate'] . "</td>";
                                         echo "<td>";
                                             echo "<a href='read.php?id=". $row['hddid'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
