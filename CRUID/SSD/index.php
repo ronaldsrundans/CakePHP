@@ -31,7 +31,7 @@
                 <div class="col-md-12">
                     <div class="page-header clearfix">
                         <h2 class="pull-left">SSD Details</h2>
-                        <a href="create.php" class="btn btn-success pull-right">Add New CPU</a>
+                        <a href="create.php" class="btn btn-success pull-right">Add New SSD</a>
                     </div>
                     <?php
                     // Include config file
