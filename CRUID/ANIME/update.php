@@ -4,8 +4,8 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$title=$type=$size=$sizegb=$year="";
-$title_err = $type_err = $size_err = $sizegb_err = $year_err = "";
+$title=$type=$freq=$model=$socket=$cache=$cores=$threads=$year="";
+$title_err =$type_err = $freq_err = $model_err = $socket_err = $cache_err = $cores_err = $threads_err = $year_err = "";
  
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
@@ -13,24 +13,32 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];
  	$input_title = trim($_POST["title"]);
 	$input_type = trim($_POST["type"]);
-	$input_sizegb = trim($_POST["sizegb"]);
-    $input_size = trim($_POST["size"]);
+	$input_model = trim($_POST["model"]);
+    $input_freq = trim($_POST["freq"]);
+	$input_cache = trim($_POST["cache"]);
+    $input_socket = trim($_POST["socket"]);
+	$input_cores = trim($_POST["cores"]);
+	$input_threads = trim($_POST["threads"]);
 	$input_year = trim($_POST["year"]);
 	
 	$title = $input_title;
 	$type = $input_type;
-	$size = $input_size;
-	$sizegb = $input_sizegb;
+	$model = $input_model;
+	$freq = $input_freq;
+	$socket = $input_socket;
+	$cache = $input_cache;
+	$cores = $input_cores;
+	$threads = $input_threads;
 	$year = $input_year;
     /*
     // Validate name
-    $input_name = trim($_POST["name"]);
-    if(empty($input_name)){
-        $name_err = "Please enter a name.";
-    } elseif(!filter_var($input_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $name_err = "Please enter a valid name.";
+    $input_type = trim($_POST["name"]);
+    if(empty($input_type)){
+        $type_err = "Please enter a name.";
+    } elseif(!filter_var($input_type, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+        $type_err = "Please enter a valid name.";
     } else{
-        $name = $input_name;
+        $type = $input_type;
     }
     
     // Validate address address
@@ -52,25 +60,18 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     }
     */
     // Check input errors before inserting in database
-    if(empty($name_err) && empty($title_err) ){
+    if(empty($type_err) && empty($title_err)){
         // Prepare an update statement
-        $sql = "UPDATE MYANIMELIST SET title=?, type=?, sizegb=?, size=?,year=? WHERE id=?";
+        $sql = "UPDATE MYANIMELIST SET title=?, type=? WHERE id=?";
 
         if($stmt = mysqli_prepare($link, $sql)){
 		
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt,"ssssi",$param_title,$param_type, $param_sizegb, $param_freq, $param_size, $param_year, $param_id);
+            mysqli_stmt_bind_param($stmt,"ssi",$param_title,$param_type, $param_id);
 
             // Set parameters
             $param_title = $title;
-            //$param_name = $name;
-			$param_type = $type;
-            //$param_freq = $freq;
-			//$param_cores = $cores;
-            //$param_threads = $threads;
-			$param_size = $size;
-            $param_year = $year;
-			$param_sizegb = $sizegb;
+            $param_type = $type;
             $param_id = $id;
               
             // Attempt to execute the prepared statement
@@ -115,13 +116,8 @@ else{
                     
                     // Retrieve individual field value
                     $title = $row["title"];
-			
 					$type = $row["type"];
-					
-					$sizegb = $row["sizegb"];
-				    $size = $row["size"];
-		
-					$year = $row["year"];
+			
 					
                  
                 } else{
@@ -173,34 +169,15 @@ else{
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
                 <div class="form-group <?php echo (!empty($title_err)) ? 'has-error' : ''; ?>">
                             <label>Title</label>
-                            <input type="text" name="title" class="form-control" value="<?php echo $title; ?>">
+                            <input type="text" name="man" class="form-control" value="<?php echo $title; ?>">
                             <span class="help-block"><?php echo $title_err;?></span>
                         </div>
-                     
-						<div class="form-group <?php echo (!empty($type_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($type_err)) ? 'has-error' : ''; ?>">
                             <label>Type</label>
-                            <input type="text" name="type" class="form-control" value="<?php echo $type; ?>">
+                            <input type="text" name="name" class="form-control" value="<?php echo $type; ?>">
                             <span class="help-block"><?php echo $type_err;?></span>
                         </div>
-					    <div class="form-group <?php echo (!empty($sizegb_err)) ? 'has-error' : ''; ?>">
-                            <label>Sizegb size</label>
-                            <input type="text" name="sizegb" class="form-control" value="<?php echo $sizegb; ?>">
-                            <span class="help-block"><?php echo $sizegb_err;?></span>
-                        </div>
-                  
-						 <div class="form-group <?php echo (!empty($size_err)) ? 'has-error' : ''; ?>">
-                            <label>Size</label>
-                            <input type="text" name="size" class="form-control" value="<?php echo $size; ?>">
-                            <span class="help-block"><?php echo $size_err;?></span>
-                        </div>
-					
-					
-						  <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
-                            <label>Years</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
-                        </div>
-				
+										
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="submit" class="btn btn-primary" value="Submit">
