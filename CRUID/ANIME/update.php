@@ -4,8 +4,8 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$title=$type=$freq=$model=$socket=$cache=$cores=$threads=$year="";
-$title_err =$type_err = $freq_err = $model_err = $socket_err = $cache_err = $cores_err = $threads_err = $year_err = "";
+$title=$type=$sizegb=$size=$year="";
+$title_err =$type_err= $sizegb_err = $size_err = $year_err = "";
  
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
@@ -13,22 +13,14 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     $id = $_POST["id"];
  	$input_title = trim($_POST["title"]);
 	$input_type = trim($_POST["type"]);
-	$input_model = trim($_POST["model"]);
-    $input_freq = trim($_POST["freq"]);
-	$input_cache = trim($_POST["cache"]);
-    $input_socket = trim($_POST["socket"]);
-	$input_cores = trim($_POST["cores"]);
-	$input_threads = trim($_POST["threads"]);
+	$input_size = trim($_POST["size"]);
+    $input_sizegb = trim($_POST["sizegb"]);
 	$input_year = trim($_POST["year"]);
 	
 	$title = $input_title;
 	$type = $input_type;
-	$model = $input_model;
-	$freq = $input_freq;
-	$socket = $input_socket;
-	$cache = $input_cache;
-	$cores = $input_cores;
-	$threads = $input_threads;
+	$sizegb = $input_sizegb;
+	$size = $input_size;
 	$year = $input_year;
     /*
     // Validate name
@@ -62,16 +54,19 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Check input errors before inserting in database
     if(empty($type_err) && empty($title_err)){
         // Prepare an update statement
-        $sql = "UPDATE MYANIMELIST SET title=?, type=? WHERE id=?";
+        $sql = "UPDATE MYANIMELIST SET title=?, type=?, size=?, sizegb=?, year=? WHERE id=?";
 
         if($stmt = mysqli_prepare($link, $sql)){
 		
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt,"ssi",$param_title,$param_type, $param_id);
+            mysqli_stmt_bind_param($stmt,"sssssi",$param_title,$param_type, $param_size,$param_sizegb, $param_year, $param_id);
 
             // Set parameters
             $param_title = $title;
             $param_type = $type;
+			$param_sizegb = $sizegb;
+            $param_size = $size;
+			$param_year = $year;         
             $param_id = $id;
               
             // Attempt to execute the prepared statement
@@ -117,6 +112,10 @@ else{
                     // Retrieve individual field value
                     $title = $row["title"];
 					$type = $row["type"];
+					$size = $row["size"];
+					$sizegb = $row["sizegb"];
+					$year = $row["year"];
+				
 			
 					
                  
@@ -178,7 +177,22 @@ else{
                             <span class="help-block"><?php echo $type_err;?></span>
                         </div>
 										
+                         <div class="form-group <?php echo (!empty($size_err)) ? 'has-error' : ''; ?>">
+                            <label>Size</label>
+                            <input type="text" name="size" class="form-control" value="<?php echo $size; ?>">
+                            <span class="help-block"><?php echo $size_err;?></span>
                         </div>
+                        <div class="form-group <?php echo (!empty($sizegb_err)) ? 'has-error' : ''; ?>">
+                            <label>SizeGB</label>
+                            <input type="text" name="sizegb" class="form-control" value="<?php echo $sizegb; ?>">
+                            <span class="help-block"><?php echo $sizegb_err;?></span>
+                        </div>
+						 <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                            <label>Year</label>
+                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
+                            <span class="help-block"><?php echo $year_err;?></span>
+                        </div>
+                 
                         <input type="hidden" name="id" value="<?php echo $id; ?>"/>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <a href="index.php" class="btn btn-default">Cancel</a>
