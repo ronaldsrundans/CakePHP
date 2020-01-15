@@ -4,8 +4,8 @@
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$title=$type=$sizegb=$size=$year="";
-$title_err =$type_err= $sizegb_err = $size_err = $year_err = "";
+$title=$type=$size=$year="";
+$title_err =$type_err = $size_err = $year_err = "";
  
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
@@ -14,12 +14,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
  	$input_title = trim($_POST["title"]);
 	$input_type = trim($_POST["type"]);
 	$input_size = trim($_POST["size"]);
-    $input_sizegb = trim($_POST["sizegb"]);
+   // $input_sizegb = trim($_POST["sizegb"]);
 	$input_year = trim($_POST["year"]);
 	
 	$title = $input_title;
 	$type = $input_type;
-	$sizegb = $input_sizegb;
+	//$sizegb = $input_sizegb;
 	$size = $input_size;
 	$year = $input_year;
     /*
@@ -54,12 +54,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Check input errors before inserting in database
     if(empty($type_err) && empty($title_err)){
         // Prepare an update statement
-        $sql = "UPDATE MYANIMELIST SET title=?, type=?, size=?, sizegb=?, year=? WHERE id=?";
+        $sql = "UPDATE MYANIMELIST SET title=?, type=?, size=?, year=? WHERE id=?";
 
         if($stmt = mysqli_prepare($link, $sql)){
 		
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt,"sssssi",$param_title,$param_type, $param_size, $param_sizegb, $param_year, $param_id);
+            mysqli_stmt_bind_param($stmt,"ssssi",$param_title,$param_type, $param_size, $param_year, $param_id);
 
             // Set parameters
             $param_title = $title;
@@ -113,7 +113,7 @@ else{
                     $title = $row["title"];
 					$type = $row["type"];
 					$size = $row["size"];
-					$sizegb = $row["sizegb"];
+					//$sizegb = $row["sizegb"];
 					$year = $row["year"];
 				
 			
@@ -182,11 +182,7 @@ else{
                             <input type="text" name="size" class="form-control" value="<?php echo $size; ?>">
                             <span class="help-block"><?php echo $size_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($sizegb_err)) ? 'has-error' : ''; ?>">
-                            <label>SizeGB</label>
-                            <input type="text" name="sizegb" class="form-control" value="<?php echo $sizegb; ?>">
-                            <span class="help-block"><?php echo $sizegb_err;?></span>
-                        </div>
+                  
 						 <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
                             <label>Year</label>
                             <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
