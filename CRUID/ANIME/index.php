@@ -49,7 +49,7 @@
 										echo "<th>Type</th>";
                                     	echo "<th>Year</th>";
 										echo "<th>Size</th>";
-										echo "<th>Size GB</th>";
+										//echo "<th>Size GB</th>";
 										echo "<th>Last changes</th>";
 										echo "<th>Options</th>";
                                     echo "</tr>";
@@ -62,7 +62,7 @@
                                         echo "<td>" . $row['type'] . "</td>";
                                         echo "<td>" . $row['year'] . "</td>";
 										echo "<td>" . $row['size'] . "</td>";
-										echo "<td>" . $row['sizegb'] . "</td>";
+										//echo "<td>" . $row['sizegb'] . "</td>";
 										echo "<td>" . $row['reg_date'] . "</td>";
                                         echo "<td>";
                                             echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
