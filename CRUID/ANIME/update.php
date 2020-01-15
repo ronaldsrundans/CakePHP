@@ -59,7 +59,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         if($stmt = mysqli_prepare($link, $sql)){
 		
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt,"sssssi",$param_title,$param_type, $param_size,$param_sizegb, $param_year, $param_id);
+            mysqli_stmt_bind_param($stmt,"sssssi",$param_title,$param_type, $param_size, $param_sizegb, $param_year, $param_id);
 
             // Set parameters
             $param_title = $title;
@@ -168,12 +168,12 @@ else{
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
                 <div class="form-group <?php echo (!empty($title_err)) ? 'has-error' : ''; ?>">
                             <label>Title</label>
-                            <input type="text" name="man" class="form-control" value="<?php echo $title; ?>">
+                            <input type="text" name="title" class="form-control" value="<?php echo $title; ?>">
                             <span class="help-block"><?php echo $title_err;?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($type_err)) ? 'has-error' : ''; ?>">
                             <label>Type</label>
-                            <input type="text" name="name" class="form-control" value="<?php echo $type; ?>">
+                            <input type="text" name="type" class="form-control" value="<?php echo $type; ?>">
                             <span class="help-block"><?php echo $type_err;?></span>
                         </div>
 										
