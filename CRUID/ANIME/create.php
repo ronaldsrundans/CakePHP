@@ -54,17 +54,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($title_err) && empty($type_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO MYANIMELIST (title, type, size) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO MYANIMELIST (title, type, size, year) VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sss", $param_title, $param_type, $param_size);
+            mysqli_stmt_bind_param($stmt, "ssss", $param_title, $param_type, $param_size, $param_year);
             
             // Set parameters
             $param_title = $type;
             $param_type = $title;
 			$param_size = $size;
-            $param_sizegb = $sizegb;
+            //$param_sizegb = $sizegb;
 			$param_year = $year;
             
                         
@@ -125,11 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <input type="text" name="size" class="form-control" value="<?php echo $size; ?>">
                             <span class="help-block"><?php echo $size_err;?></span>
                         </div>
-                    	<div class="form-group <?php echo (!empty($sizegb_err)) ? 'has-error' : ''; ?>">
-                            <label>Size GB</label>
-                            <input type="text" name="sizegb" class="form-control" value="<?php echo $sizegb; ?>">
-                            <span class="help-block"><?php echo $sizegb_err;?></span>
-                        </div>
+                  
                     	<div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
                             <label>Year</label>
                             <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
