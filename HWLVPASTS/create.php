@@ -5,19 +5,20 @@ require_once "config.php";
 // Define variables and initialize with empty values
 $persName =$persSurname=$persPhone=$persEmail = "";
 $persName_err =$persSurname_err=$persPhone_err =$persEmail_err = "";
+/*
 $educName =$educFac=$educProg=$educLevel=educTime = "";
 $educName_err =$educFac_err=$educProg_err =$educLevel_err=$educTime_err = "";
 $jobTitle =$jobCompany=$jobLoad=$jobTime = "";
-$jobTitle_err =$jobCompany_err=$jobLoad_err =$jobTime_err = "";
+$jobTitle_err =$jobCompany_err=$jobLoad_err =$jobTime_err = "";*/
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
- 	$input_persName = trim($_POST["PersName"]);
-	$input_persSurname = trim($_POST["PersSurname"]);
-	$input_persPhone = trim($_POST["PersPhone"]);
-	$input_persEmail = trim($_POST["PersEmail"]);
+ 	$input_persName = trim($_POST["persName"]);
+	$input_persSurname = trim($_POST["persSurname"]);
+	$input_persPhone = trim($_POST["persPhone"]);
+	$input_persEmail = trim($_POST["persEmail"]);
 	
-	$input_educName = trim($_POST["EducName"]);
+/*   $input_educName = trim($_POST["EducName"]);
 	$input_educFac = trim($_POST["EducFac"]);
 	$input_educProg = trim($_POST["EducProg"]);
 	$input_educLevel = trim($_POST["EducLevel"]);
@@ -26,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$input_jobTitle = trim($_POST["JobTitle"]);
 	$input_jobCompany = trim($_POST["JobCompany"]);
 	$input_jobLoad = trim($_POST["JobLoad"]);
-	$input_jobTime = trim($_POST["JobTime"]);
+	$input_jobTime = trim($_POST["JobTime"]);*/
 //	$input_educTime = trim($_POST["EducTime"]);
 
 	$persName = $input_persName;
@@ -34,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$persPhone = $input_persPhone;
 	$persEmail = $input_persEmail;
 	
-    $educName = $input_educName;
+ /*   $educName = $input_educName;
 	$educFac = $input_educFac;
 	$educProg = $input_educProg;
 	$educLevel = $input_educLevel;
@@ -43,20 +44,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$jobTitle = $input_jobTitle;
 	$jobCompany = $input_jobCompany;
 	$jobLoad = $input_jobLoad;
-	$jobTime = $input_jobTime;
-	//$year = $input_year;
+	$jobTime = $input_jobTime;*/
+	//$job = $input_job;
 	
 	// Validate name
-	/*
-    $input_type = trim($_POST["name"]);
-    if(empty($input_type)){
-        $title_err = "Please enter a name.";
-    } elseif(!filter_var($input_type, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $title_err = "Please enter a valid name.";
+	
+    $input_persName = trim($_POST["persName"]);
+    if(empty($input_persName)){
+        $persName_err = "Lūdzu ievadiet vārdu.";
+    } elseif(!filter_var($input_persName, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
+        $persName_err = "Please enter a valid name.";
     } else{
-        $title = $input_type;
+        $persName = $input_persName;
     }
-    */
+    
     // Validate address
 	/*
     $input_address = trim($_POST["address"]);
@@ -80,7 +81,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($persName_err) && empty($persSurname_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO Persons (PersName, PersSurname, PersPhone, PersEmail) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO Persons (persName, persSurname, persPhone, persEmail) VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -91,7 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_persSurname = $persSurname;
 			$param_persPhone = $persPhone;
             $param_persEmail = $persEmail;
-			//$param_year = $year;
+			//$param_job = $job;
             
                         
             // Attempt to execute the prepared statement
@@ -139,77 +140,77 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                            <div class="form-group <?php echo (!empty($persName_err)) ? 'has-error' : ''; ?>">
                             <label>Vārds</label>
-                            <input type="text" name="PersName" class="form-control" value="<?php echo $persName; ?>">
+                            <input type="text" name="persName" class="form-control" value="<?php echo $persName; ?>">
                             <span class="help-block"><?php echo $persName_err;?></span>
                         </div> 
 						<div class="form-group <?php echo (!empty($persSurname_err)) ? 'has-error' : ''; ?>">
                             <label>Uzvārds</label>
-                            <input type="text" name="PersSurname" class="form-control" value="<?php echo $persSurname; ?>">
+                            <input type="text" name="persSurname" class="form-control" value="<?php echo $persSurname; ?>">
                             <span class="help-block"><?php echo $persSurname_err;?></span>
                         </div>
                     	<div class="form-group <?php echo (!empty($persPhone_err)) ? 'has-error' : ''; ?>">
                             <label>Tālrunis</label>
-                            <input type="text" name="PersPhone" class="form-control" value="<?php echo $persPhone; ?>">
+                            <input type="text" name="persPhone" class="form-control" value="<?php echo $persPhone; ?>">
                             <span class="help-block"><?php echo $persPhone_err;?></span>
                         </div>
                   
                     	<div class="form-group <?php echo (!empty($persEmail_err)) ? 'has-error' : ''; ?>">
                             <label>E-pasts</label>
-                            <input type="text" name="PersEmail" class="form-control" value="<?php echo $persEmail; ?>">
+                            <input type="text" name="persEmail" class="form-control" value="<?php echo $persEmail; ?>">
                             <span class="help-block"><?php echo $persEmail_err;?></span>
                         </div>
                         
-                        
-                        
-                          <p><h2>Izglītība</h2></p>
+                                                <p><h2>Izglītība</h2></p>
                         <div class="form-group <?php echo (!empty($educName_err)) ? 'has-error' : ''; ?>">
                             <label>Izglītības iestādes nosaukums</label>
-                            <input type="text" name="EducName" class="form-control" value="<?php echo $educName; ?>">
+                            <input type="text" name="educName" class="form-control" value="<?php echo $educName; ?>">
                             <span class="help-block"><?php echo $educName_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($educFac_err)) ? 'has-error' : ''; ?>">
+                                               <div class="form-group <?php echo (!empty($educFac_err)) ? 'has-error' : ''; ?>">
                             <label>Fakultāte</label>
-                            <input type="text" name="EducFac" class="form-control" value="<?php echo $educFac; ?>">
+                            <input type="text" name="educFac" class="form-control" value="<?php echo $educFac; ?>">
                             <span class="help-block"><?php echo $educFac_err;?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($educProg_err)) ? 'has-error' : ''; ?>">
                             <label>Studiju virziens</label>
-                            <input type="text" name="EducProg" class="form-control" value="<?php echo $educProg; ?>">
+                            <input type="text" name="educProg" class="form-control" value="<?php echo $educProg; ?>">
                             <span class="help-block"><?php echo $educProg_err;?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($educLevel_err)) ? 'has-error' : ''; ?>">
                             <label>Izglītības līmenis</label>
-                            <input type="text" name="EducLevel" class="form-control" value="<?php echo $educLevel; ?>">
-                            <span class="help-block"><?php echo $educLevel_err;?></span>
+                            <input type="text" name="educLevel" class="form-control" value="<?php echo $educLevel; ?>">
+                            <span class="help-block"><?php echo $educlevel_err;?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($educTime_err)) ? 'has-error' : ''; ?>">
                             <label>Mācību laiks</label>
-                            <input type="text" name="EducTime" class="form-control" value="<?php echo $educTime; ?>">
+                            <input type="text" name="educTime" class="form-control" value="<?php echo $educTime; ?>">
                             <span class="help-block"><?php echo $educTime_err;?></span>
                         </div>
-                        
-                        
-                           <p><h2>Darba pieredze</h2></p>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                                                   <p><h2>Darba pieredze</h2></p>
+                        <div class="form-group <?php echo (!empty($jobCompany_err)) ? 'has-error' : ''; ?>">
                             <label>Darba vietas nosaukums</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="jobCompany" class="form-control" value="<?php echo $jobCompany; ?>">
+                            <span class="help-block"><?php echo $jobCompany_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($jobTitle_err)) ? 'has-error' : ''; ?>">
                             <label>Amata nosaukums</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="jobTitle" class="form-control" value="<?php echo $jobTitle; ?>">
+                            <span class="help-block"><?php echo $jobTitle_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($jobLoad_err)) ? 'has-error' : ''; ?>">
                             <label>Darba slodze</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="jobLoad" class="form-control" value="<?php echo $jobLoad; ?>">
+                            <span class="help-block"><?php echo $jobLoad_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($jobTime_err)) ? 'has-error' : ''; ?>">
                             <label>Kopā nostrādātais laiks</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="jobTime" class="form-control" value="<?php echo $jobTime; ?>">
+                            <span class="help-block"><?php echo $jobTime_err;?></span>
                         </div>
+               
+                        
+                        
+
                 
                     
                         <input type="submit" class="btn btn-primary" value="Sūtīt">
