@@ -8,17 +8,17 @@ $persName_err =$persSurname_err=$size_err =$sizegb_err=$year_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
- 	$input_title = trim($_POST["title"]);
-	$input_type = trim($_POST["type"]);
-	$input_size = trim($_POST["size"]);
-	$input_sizegb = trim($_POST["sizegb"]);
-	$input_year = trim($_POST["year"]);
+ 	$input_persName = trim($_POST["PersName"]);
+	$input_type = trim($_POST["PersSurname"]);
+	$input_size = trim($_POST["PersPhone"]);
+	$input_sizegb = trim($_POST["PersEmail"]);
+	//$input_year = trim($_POST["year"]);
 
-	$type = $input_title;
-	$title = $input_type;
-	$size = $input_size;
-	$sizegb = $input_sizegb;
-	$year = $input_year;
+	$persName = $input_persName;
+	$persSurname = $input_persSurname;
+	$persPhone = $input_persPhone;
+	$persEmail = $input_persEmail;
+	//$year = $input_year;
 	
 	// Validate name
 	/*
@@ -52,20 +52,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     */
     // Check input errors before inserting in database
-    if(empty($title_err) && empty($type_err)){
+    if(empty($persName_err) && empty($persSurname_err)){
         // Prepare an insert statement
         $sql = "INSERT INTO Persons (PersName, PersSurname, PersPhone, PersEmail) VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssss", $param_title, $param_type, $param_size, $param_year);
+            mysqli_stmt_bind_param($stmt, "ssss", $param_persName, $param_persSurname, $param_persPhone, $param_persEmail);
             
             // Set parameters
-            $param_title = $type;
-            $param_type = $title;
-			$param_size = $size;
-            //$param_sizegb = $sizegb;
-			$param_year = $year;
+            $param_persName = $persName;
+            $param_persSurname = $persSurname;
+			$param_persPhone = $persPhone;
+            $param_persEmail = $persEmail;
+			//$param_year = $year;
             
                         
             // Attempt to execute the prepared statement
@@ -74,7 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 header("location: index.php");
                 exit();
             } else{
-                echo "Something went wrong. Please try again later.";
+                echo "Kaut kas nogāja greizi. Lūdzu mēģiniet atkal.";
             }
         }
          
@@ -111,55 +111,55 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <p>Lūdzu aizpildiet laukus un sūtiet uz datubāzi.</p>
                     <p><h2>Pamatdati</h2></p>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                           <div class="form-group <?php echo (!empty($title_err)) ? 'has-error' : ''; ?>">
+                           <div class="form-group <?php echo (!empty($persName_err)) ? 'has-error' : ''; ?>">
                             <label>Vārds</label>
-                            <input type="text" name="title" class="form-control" value="<?php echo $title; ?>">
-                            <span class="help-block"><?php echo $title_err;?></span>
+                            <input type="text" name="PersName" class="form-control" value="<?php echo $persName; ?>">
+                            <span class="help-block"><?php echo $persName_err;?></span>
                         </div> 
-						<div class="form-group <?php echo (!empty($type_err)) ? 'has-error' : ''; ?>">
+						<div class="form-group <?php echo (!empty($persSurname_err)) ? 'has-error' : ''; ?>">
                             <label>Uzvārds</label>
-                            <input type="text" name="type" class="form-control" value="<?php echo $type; ?>">
-                            <span class="help-block"><?php echo $type_err;?></span>
+                            <input type="text" name="PersSurname" class="form-control" value="<?php echo $persSurname; ?>">
+                            <span class="help-block"><?php echo $persSurname_err;?></span>
                         </div>
-                    	<div class="form-group <?php echo (!empty($size_err)) ? 'has-error' : ''; ?>">
+                    	<div class="form-group <?php echo (!empty($persPhone_err)) ? 'has-error' : ''; ?>">
                             <label>Tālrunis</label>
-                            <input type="text" name="size" class="form-control" value="<?php echo $size; ?>">
-                            <span class="help-block"><?php echo $size_err;?></span>
+                            <input type="text" name="PersPhone" class="form-control" value="<?php echo $persPhone; ?>">
+                            <span class="help-block"><?php echo $persPhone_err;?></span>
                         </div>
                   
-                    	<div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                    	<div class="form-group <?php echo (!empty($persEmail_err)) ? 'has-error' : ''; ?>">
                             <label>E-pasts</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="PersEmail" class="form-control" value="<?php echo $persEmail; ?>">
+                            <span class="help-block"><?php echo $persEmail_err;?></span>
                         </div>
                         
                         
                         
                           <p><h2>Izglītība</h2></p>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($educName_err)) ? 'has-error' : ''; ?>">
                             <label>Izglītības iestādes nosaukums</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="EducName" class="form-control" value="<?php echo $educName; ?>">
+                            <span class="help-block"><?php echo $educName_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($educFac_err)) ? 'has-error' : ''; ?>">
                             <label>Fakultāte</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="EducFac" class="form-control" value="<?php echo $educFac; ?>">
+                            <span class="help-block"><?php echo $educFac_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($educProg_err)) ? 'has-error' : ''; ?>">
                             <label>Studiju virziens</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="EducProg" class="form-control" value="<?php echo $educProg; ?>">
+                            <span class="help-block"><?php echo $educProg_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($educLevel_err)) ? 'has-error' : ''; ?>">
                             <label>Izglītības līmenis</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="EducLevel" class="form-control" value="<?php echo $educLevel; ?>">
+                            <span class="help-block"><?php echo $educLevel_err;?></span>
                         </div>
-                        <div class="form-group <?php echo (!empty($year_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($educTime_err)) ? 'has-error' : ''; ?>">
                             <label>Mācību laiks</label>
-                            <input type="text" name="year" class="form-control" value="<?php echo $year; ?>">
-                            <span class="help-block"><?php echo $year_err;?></span>
+                            <input type="text" name="EducTime" class="form-control" value="<?php echo $educTime; ?>">
+                            <span class="help-block"><?php echo $educTime_err;?></span>
                         </div>
                         
                         
