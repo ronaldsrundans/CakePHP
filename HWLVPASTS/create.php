@@ -5,11 +5,12 @@ require_once "config.php";
 // Define variables and initialize with empty values
 $persName =$persSurname=$persPhone=$persEmail = "";
 $persName_err =$persSurname_err=$persPhone_err =$persEmail_err = "";
-/*
-$educName =$educFac=$educProg=$educLevel=educTime = "";
-$educName_err =$educFac_err=$educProg_err =$educLevel_err=$educTime_err = "";
+
+
+//$educName =$educFac=$educProg=$educLevel=educTime = "";
+//$educName_err =$educFac_err=$educProg_err =$educLevel_err=$educTime_err = "";
 $jobTitle =$jobCompany=$jobLoad=$jobTime = "";
-$jobTitle_err =$jobCompany_err=$jobLoad_err =$jobTime_err = "";*/
+$jobTitle_err =$jobCompany_err=$jobLoad_err =$jobTime_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -18,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$input_persPhone = trim($_POST["persPhone"]);
 	$input_persEmail = trim($_POST["persEmail"]);
 	
-/*   $input_educName = trim($_POST["EducName"]);
+   $input_educName = trim($_POST["EducName"]);
 	$input_educFac = trim($_POST["EducFac"]);
 	$input_educProg = trim($_POST["EducProg"]);
 	$input_educLevel = trim($_POST["EducLevel"]);
@@ -27,15 +28,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$input_jobTitle = trim($_POST["JobTitle"]);
 	$input_jobCompany = trim($_POST["JobCompany"]);
 	$input_jobLoad = trim($_POST["JobLoad"]);
-	$input_jobTime = trim($_POST["JobTime"]);*/
-//	$input_educTime = trim($_POST["EducTime"]);
+	$input_jobTime = trim($_POST["JobTime"]);
 
 	$persName = $input_persName;
 	$persSurname = $input_persSurname;
 	$persPhone = $input_persPhone;
 	$persEmail = $input_persEmail;
 	
- /*   $educName = $input_educName;
+    $educName = $input_educName;
 	$educFac = $input_educFac;
 	$educProg = $input_educProg;
 	$educLevel = $input_educLevel;
@@ -44,8 +44,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$jobTitle = $input_jobTitle;
 	$jobCompany = $input_jobCompany;
 	$jobLoad = $input_jobLoad;
-	$jobTime = $input_jobTime;*/
-	//$job = $input_job;
+	$jobTime = $input_jobTime;
+	
 	
 	// Validate name
 	
