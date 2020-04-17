@@ -4,20 +4,46 @@ require_once "config.php";
  
 // Define variables and initialize with empty values
 $persName =$persSurname=$persPhone=$persEmail = "";
-$persName_err =$persSurname_err=$size_err =$sizegb_err=$year_err = "";
- 
+$persName_err =$persSurname_err=$persPhone_err =$persEmail_err = "";
+$educName =$educFac=$educProg=$educLevel=educTime = "";
+$educName_err =$educFac_err=$educProg_err =$educLevel_err=$educTime_err = "";
+$jobTitle =$jobCompany=$jobLoad=$jobTime = "";
+$jobTitle_err =$jobCompany_err=$jobLoad_err =$jobTime_err = "";
+
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  	$input_persName = trim($_POST["PersName"]);
-	$input_type = trim($_POST["PersSurname"]);
-	$input_size = trim($_POST["PersPhone"]);
-	$input_sizegb = trim($_POST["PersEmail"]);
-	//$input_year = trim($_POST["year"]);
+	$input_persSurname = trim($_POST["PersSurname"]);
+	$input_persPhone = trim($_POST["PersPhone"]);
+	$input_persEmail = trim($_POST["PersEmail"]);
+	
+	$input_educName = trim($_POST["EducName"]);
+	$input_educFac = trim($_POST["EducFac"]);
+	$input_educProg = trim($_POST["EducProg"]);
+	$input_educLevel = trim($_POST["EducLevel"]);
+	$input_educTime = trim($_POST["EducTime"]);
+	
+	$input_jobTitle = trim($_POST["JobTitle"]);
+	$input_jobCompany = trim($_POST["JobCompany"]);
+	$input_jobLoad = trim($_POST["JobLoad"]);
+	$input_jobTime = trim($_POST["JobTime"]);
+//	$input_educTime = trim($_POST["EducTime"]);
 
 	$persName = $input_persName;
 	$persSurname = $input_persSurname;
 	$persPhone = $input_persPhone;
 	$persEmail = $input_persEmail;
+	
+    $educName = $input_educName;
+	$educFac = $input_educFac;
+	$educProg = $input_educProg;
+	$educLevel = $input_educLevel;
+	$educTime = $input_educTime;
+	
+	$jobTitle = $input_jobTitle;
+	$jobCompany = $input_jobCompany;
+	$jobLoad = $input_jobLoad;
+	$jobTime = $input_jobTime;
 	//$year = $input_year;
 	
 	// Validate name
