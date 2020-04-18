@@ -6,9 +6,8 @@ require_once "config.php";
 $persName =$persSurname=$persPhone=$persEmail = "";
 $persName_err =$persSurname_err=$persPhone_err =$persEmail_err = "";
 
-
-//$educName =$educFac=$educProg=$educLevel=educTime = "";
-//$educName_err =$educFac_err=$educProg_err =$educLevel_err=$educTime_err = "";
+$educName=$educFac=$educProg=$educLevel=$educTime="";
+$educName_err =$educFac_err=$educProg_err =$educLevel_err=$educTime_err = "";
 $jobTitle =$jobCompany=$jobLoad=$jobTime = "";
 $jobTitle_err =$jobCompany_err=$jobLoad_err =$jobTime_err = "";
 
@@ -81,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($persName_err) && empty($persSurname_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO Persons (persName, persSurname, persPhone, persEmail) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO Persons (PersName, PersSurname, PersPhone, PersEmail) VALUES (?, ?, ?, ?)";
          
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
