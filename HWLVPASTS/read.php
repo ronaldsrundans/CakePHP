@@ -5,7 +5,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "config.php";
     
     // Prepare a select statement
-    $sql = "SELECT * FROM Persons WHERE id = ?";
+    $sql = "SELECT * FROM Persons WHERE PersID = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -23,8 +23,10 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 
                 // Retrieve individual field value
-                $title = $row["type"];
-                $type = $row["title"];
+                $persName = $row["PersName"];
+                $persSurname = $row["PersSurname"];
+                $persPhone = $row["PersPhone"];
+                $persEmail = $row["PersEmail"];
                 } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: error.php");
@@ -70,16 +72,16 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                     </div>
 					<div class="form-group">
                         <label>Vārds</label>
-                        <p class="form-control-static"><?php echo $row["title"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["PersName"]; ?></p>
                     </div>
                     <div class="form-group">
                         <label>Uzvārds</label>
-                        <p class="form-control-static"><?php echo $row["type"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["PersSurname"]; ?></p>
                     </div>
 			
 					<div class="form-group">
                         <label>Tālrunis</label>
-                        <p class="form-control-static"><?php echo $row["reg_date"]; ?></p>
+                        <p class="form-control-static"><?php echo $row["PersPhone"]; ?></p>
                     </div>
                     <p><a href="index.php" class="btn btn-primary">Back</a></p>
                 </div>
