@@ -5,7 +5,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     require_once "config.php";
     
     // Prepare a select statement
-    $sql = "SELECT * FROM Persons WHERE PersID = ?";
+    $sql = "SELECT * FROM Persons INNER JOIN Education ON PersEducID=EducID WHERE PersID = ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -27,6 +27,13 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $persSurname = $row["PersSurname"];
                 $persPhone = $row["PersPhone"];
                 $persEmail = $row["PersEmail"];
+                
+                $educName = $row["EducName"];
+                $educFac = $row["EducFac"];
+                $educProg = $row["EducProg"];
+                $educLevel = $row["EducLevel"];
+                
+                
                 } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
                 header("location: error.php");
@@ -53,7 +60,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View OS Record</title>
+    <title>CV apskats</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper{
@@ -82,6 +89,42 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 					<div class="form-group">
                         <label>Tālrunis</label>
                         <p class="form-control-static"><?php echo $row["PersPhone"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>E-pasts</label>
+                        <p class="form-control-static"><?php echo $row["PersEmail"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Izglītības iestādes nosaukums</label>
+                        <p class="form-control-static"><?php echo $row["EducName"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Izglītības iestādes fakultāte</label>
+                        <p class="form-control-static"><?php echo $row["EducFac"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Studiju virziens</label>
+                        <p class="form-control-static"><?php echo $row["EducProg"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Mācību laiks</label>
+                        <p class="form-control-static"><?php echo $row["EducTime"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Izglītības iestādes nosaukums</label>
+                        <p class="form-control-static"><?php echo $row["EducName"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Izglītības iestādes fakultāte</label>
+                        <p class="form-control-static"><?php echo $row["EducFac"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Studiju virziens</label>
+                        <p class="form-control-static"><?php echo $row["EducProg"]; ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Mācību laiks</label>
+                        <p class="form-control-static"><?php echo $row["EducTime"]; ?></p>
                     </div>
                     <p><a href="index.php" class="btn btn-primary">Back</a></p>
                 </div>
