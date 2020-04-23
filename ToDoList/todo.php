@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+	<title>Insert data in MySQL database using Ajax</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<style>
 body {
   margin: 0;
   min-width: 250px;
@@ -111,15 +113,22 @@ input {
   background-color: #bbb;
 }
 </style>
-
-
-
-
+</head>
 <body>
 <div id="myDIV" class="header">
-  <h2 style="margin:5px">Ronalds To Do List</h2>
-  <input type="text" id="myInput" placeholder="Title...">
-  <span onclick="newElement()" class="addBtn">Add</span>
+<div style="margin: auto;width: 60%;">
+	<div class="alert alert-success alert-dismissible" id="success" style="display:none;">
+	  <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+	</div>
+	<form id="fupForm" name="form1" method="post">
+		<div class="form-group">
+			
+			<input type="text" class="form-control" id="name" placeholder="What should you do?" name="name">
+		</div>
+
+		<input type="button" name="save" class="btn btn-primary" value="Save to database" id="butsave">
+	</form>
+</div>
 </div>
 <?php
 $servername = "localhost";
@@ -151,6 +160,9 @@ if ($result->num_rows > 0) {
 }
 $conn->close();
 ?>
+
+
+
 <script>
 // Create a "close" button and append it to each list item
 var myNodelist = document.getElementsByTagName("LI");
@@ -163,6 +175,7 @@ for (i = 0; i < myNodelist.length; i++) {
   myNodelist[i].appendChild(span);
 }
 // Click on a close button to hide the current list item
+
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
@@ -178,32 +191,40 @@ list.addEventListener('click', function(ev) {
     ev.target.classList.toggle('checked');
   }
 }, false);
-// Create a new list item when clicking on the "Add" button
-function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("You must write something!");
-  } else {
-    document.getElementById("myUL").appendChild(li);
-  }
-  document.getElementById("myInput").value = "";
+$(document).ready(function() {
+	$('#butsave').on('click', function() {
+		$("#butsave").attr("disabled", "disabled");
+		var name = $('#name').val();
 
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function() {
-      var div = this.parentElement;
-      div.style.display = "none";
-    }
-  }
-}
+		if(name!=""){
+			$.ajax({
+				url: "save2.php",
+				type: "POST",
+				data: {
+					name: name,
+						
+				},
+				cache: false,
+				success: function(dataResult){
+					var dataResult = JSON.parse(dataResult);
+					if(dataResult.statusCode==200){
+						$("#butsave").removeAttr("disabled");
+						$('#fupForm').find('input:text').val('');
+						$("#success").show();
+						$('#success').html('Data added successfully !'); 						
+					}
+					else if(dataResult.statusCode==201){
+					   alert("Error occured !");
+					}
+					
+				}
+			});
+		}
+		else{
+			alert('Please fill all the field !');
+		}
+	});
+});
 </script>
 </body>
 </html>
