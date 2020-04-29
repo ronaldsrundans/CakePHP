@@ -143,7 +143,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM ToDoTable";
+$sql = "SELECT * FROM ToDoTable order by added desc";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -152,6 +152,7 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         echo  "<li>". $row["Task"]. "</li>";
+        echo "<a href='delete.php?id=". $row['ID'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
         
     }
 	echo "</ul>";    
@@ -198,7 +199,7 @@ $(document).ready(function() {
 
 		if(name!=""){
 			$.ajax({
-				url: "save2.php",
+				url: "savetodo.php",
 				type: "POST",
 				data: {
 					name: name,
