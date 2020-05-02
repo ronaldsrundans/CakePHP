@@ -47,7 +47,7 @@ document.getElementById("hextext").innerHTML = str2hex(x);
 document.getElementById("demo3").innerHTML = hex2text(str2hex(x));
 
 document.getElementById("bintext").innerHTML =hex2bin(str2hex(x));
-document.getElementById("bintext2").innerHTML =hex2bin('0129abcdef');
+document.getElementById("bintext2").innerHTML =hex2bin('0123456789abcdef');
 
 ///needs padding to fit in block
 function str2hex(str) {
@@ -83,21 +83,30 @@ function hex2dec(hexStr) {
     return parseInt(hexStr, 16)
 }
 function hex2bin(hexstr){
-	var dec=[];
+	var dec = [];
+	var bin = [];
+	//var binstr = '';
+	var binarr = [];
 	var i,j;
 	var hex = hexstr.toLowerCase();
 	var hexLen = hex.length;
 	for (i=0; i<hexLen; i++) {
-    	//hex += str.charCodeAt(i).toString(16);
     	dec.push(hex2dec(hex[i]));
     } 
     for(i=0; i<hexLen; i++){
-    	for(j=0; j<hexLen; j++){
-    	
+    	for(j=4; j>0; j--){
+    		//bin[j-1] = dec[i]%2;
+    		binarr[j-1+i*4] = dec[i]%2;
+    		dec[i] = parseInt(dec[i]/2);
     	}
+    	//binstr += bin.toString();
+    	//binstr += ',';
+    	//binstr += bin.join();
     }
     
-	return dec;
+    //binstr=binstr.trim(' ');
+    //return binstr;
+    return binarr;
 }
 function bin2hex(){
 }
