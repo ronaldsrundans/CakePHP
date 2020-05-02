@@ -9,28 +9,57 @@
 <p id="hextext"></p>
 <h3>Plain bin text:</h3>
 <p id="bintext"></p>
+<h4>Plain hex text2:</h4>
+<p id="hextext2"></p>
+<h4>Plain bin text2:</h4>
+<p id="bintext2"></p>
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
 
 <script>
+function myFunction() {
+var values, text, fLen, i;
+var str = "Your lips are smoother than vaseline"
+
+values = [];
+fLen = str.length;
+
+text = "<ul>";
+for (i = 0; i < fLen; i++) {
+  text += "<li>" +str[i]+"="+str.charCodeAt(i) + "</li>";
+}
+text += "</ul>";
+
+document.getElementById("demo").innerHTML = text;
+}
 var x = "Your lips are smoother than vaseline"
+
+var y = "0123456789ABCDEF";
 document.getElementById("plaintext").innerHTML = x;
-document.getElementById("hextext").innerHTML = str2Hex(x);
-document.getElementById("bintext").innerHTML =hex2Bin(str2Hex(x));
+document.getElementById("hextext2").innerHTML = y;
+document.getElementById("hextext").innerHTML = str2hex(x);
+document.getElementById("bintext").innerHTML =hex2bin(str2hex(x));
+document.getElementById("bintext2").innerHTML =hex2bin(y);
 
 
-function str2Hex(str) {
-    var result = '';
+function str2hex(str) {
+    var hex = '';
     for (var i=0; i<str.length; i++) {
-      result += str.charCodeAt(i).toString(16);
+      hex += str.charCodeAt(i).toString(16);
     }
-    return result;
+    
+    return hex;
   }
-function hex2Bin(str) {
-    var result = '';
+function hex2bin(hexstr) {
+    var bin='';
     for (var i=0; i<str.length; i++) {
-      result += str.charCodeAt(i).toString(2);
-    }
-    return result;
-  }
+      bin += str.charCodeAt(i).toString(2);
+      //document.write(5);
+    //  bin.push(str.charCodeAt(i));
+    }    
+    return bin;
+}
 
 </script>
 
