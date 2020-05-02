@@ -14,8 +14,9 @@
 <h4>Hex tex2 to bin:</h4>
 <p id="bintext2"></p>
 <h4>Hex to text:</h4>
-
 <p id="demo3"></p>
+<h4>bintext2 to dec:</h4>
+<p id="demo4"></p>
 
 <button onclick="myFunction()">Try it</button>
 
@@ -45,6 +46,7 @@ document.getElementById("plaintext").innerHTML = x;
 document.getElementById("hextext2").innerHTML = y;
 document.getElementById("hextext").innerHTML = str2hex(x);
 document.getElementById("demo3").innerHTML = hex2text(str2hex(x));
+document.getElementById("demo4").innerHTML = bin2hex(hex2bin(str2hex(x)));
 
 document.getElementById("bintext").innerHTML =hex2bin(str2hex(x));
 document.getElementById("bintext2").innerHTML =hex2bin('0123456789abcdef');
@@ -72,11 +74,11 @@ function hexPadSize(strLenght){
 	return n;
 }
 function hex2text(hexSource) {
-    var bin = '';
+    var txt = '';
     for (var i=0;i<hexSource.length;i=i+2) {
-        bin += String.fromCharCode(hex2dec(hexSource.substr(i,2)));
+        txt += String.fromCharCode(hex2dec(hexSource.substr(i,2)));
     }
-    return bin;
+    return txt;
 }
 function hex2dec(hexStr) {
     hexStr = (hexStr + '').replace(/[^a-f0-9]/gi, '')
@@ -108,8 +110,38 @@ function hex2bin(hexstr){
     //return binstr;
     return binarr;
 }
-function bin2hex(){
+function bin2hex(binarr){
+	var decarr = bin2dec(binarr);
+	var i;
+	var hexString = '';
+	for (i=0; i<decarr.length; i++){
+		hexString += decarr[i].toString(16);
+	}
+	return hexString;
 }
+function bin2dec(binarr){
+	var decarr = [];
+	var i;
+	var tmp;
+	for (i=0; i<binarr.length; i=i+4){
+		tmp = binarr[i]*8;
+		tmp = tmp+(binarr[i+1]*4);
+		tmp = tmp+(binarr[i+2]*2);
+		tmp = tmp+(binarr[i+3]);
+		decarr.push(tmp);
+	}
+	return decarr;
+}
+function printArr(arr){
+	var txt = "";
+	numbers.forEach(myFunctionTxt);
+	document.getElementById("printArr").innerHTML = txt;
+
+}
+function myFunctionTxt(value, index, array) {
+  txt = txt + value + "<br>"; 
+}
+
 </script>
 
 </body>
