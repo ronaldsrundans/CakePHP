@@ -7,11 +7,11 @@
 <p id="plaintext"></p>
 <h3>Plain text to hex:</h3>
 <p id="hextext"></p>
-<h3>Plain bin text:</h3>
+<h3>Hex to bin:</h3>
 <p id="bintext"></p>
-<h4>Plain hex text2:</h4>
+<h4>Hex text2:</h4>
 <p id="hextext2"></p>
-<h4>Plain bin text2:</h4>
+<h4>Hex tex2 to bin:</h4>
 <p id="bintext2"></p>
 <h4>Hex to text:</h4>
 
@@ -25,11 +25,12 @@
 <script>
 function myFunction() {
 var values, fLen, i;
-var str = "0123456789ABCDEF";
+var str = "0123456789abcdefABCDEF";
 values = [];
 bin=[];
 fLen = str.length;
 for (i = 0; i < fLen; i++) {
+
   values.push(str.charCodeAt(i));
   //bin.push(str.toString());
 }
@@ -70,21 +71,35 @@ function hexPadSize(strLenght){
 		}
 	return n;
 }
-
-
-
-
 function hex2text(hexSource) {
     var bin = '';
     for (var i=0;i<hexSource.length;i=i+2) {
-        bin += String.fromCharCode(hexdec(hexSource.substr(i,2)));
+        bin += String.fromCharCode(hex2dec(hexSource.substr(i,2)));
     }
     return bin;
 }
-
-function hexdec(hexString) {
-    hexString = (hexString + '').replace(/[^a-f0-9]/gi, '')
-    return parseInt(hexString, 16)
+function hex2dec(hexStr) {
+    hexStr = (hexStr + '').replace(/[^a-f0-9]/gi, '')
+    return parseInt(hexStr, 16)
+}
+function hex2bin(hexstr){
+	var dec=[];
+	var i,j;
+	var hex = hexstr.toLowerCase();
+	var hexLen = hex.length;
+	for (i=0; i<hexLen; i++) {
+    	//hex += str.charCodeAt(i).toString(16);
+    	dec.push(hex2dec(hex[i]));
+    } 
+    for(i=0; i<hexLen; i++){
+    	for(j=0; j<hexLen; j++){
+    	
+    	}
+    }
+    
+	return dec;
+}
+function bin2hex(){
 }
 </script>
 
