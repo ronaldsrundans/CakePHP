@@ -71,7 +71,6 @@ function hex2dec(hexStr) {
 function hex2bin(hexstr){
 	var dec = [];
 	var bin = [];
-	//var binstr = '';
 	var binarr = [];
 	var i,j;
 	var hex = hexstr.toLowerCase();
@@ -81,17 +80,10 @@ function hex2bin(hexstr){
     } 
     for(i=0; i<hexLen; i++){
     	for(j=4; j>0; j--){
-    		//bin[j-1] = dec[i]%2;
     		binarr[j-1+i*4] = dec[i]%2;
     		dec[i] = parseInt(dec[i]/2);
     	}
-    	//binstr += bin.toString();
-    	//binstr += ',';
-    	//binstr += bin.join();
     }
-    
-    //binstr=binstr.trim(' ');
-    //return binstr;
     return binarr;
 }
 function bin2hex(binarr){
