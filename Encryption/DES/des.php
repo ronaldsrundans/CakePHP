@@ -13,38 +13,32 @@
 <p id="text2bin"></p>
 <h2>Key to bin:</h2>
 <p id="key2bin"></p>
-<h2>Bin to hex:</h2>
+<h2>Bin text to hex:</h2>
 <p id="bin2hex"></p>
-<h1>Bin to text:</h1>
+<h2>Bin key to hex:</h2>
+<p id="binkey2hex"></p>
+<h2>Bin to text:</h2>
 <p id="bin2text"></p>
+<h1>Print arr:</h1>
 <p id="printArr"></p>
-
-<button onclick="myFunction()">Try it</button>
-
 <p id="demo"></p>
 
 <script>
 var x = "Your lips are smoother than vaseline."
-var y = "0123456789ABCDEF";
-var key ="133457799BBCDFF1";
+var y = "8787878787878787";
+var key ="0E329232EA6D0D73";
 //document.getElementById("plaintext").innerHTML = x;
 document.getElementById("text2hex").innerHTML = y;
 document.getElementById("key2hex").innerHTML = key;
 document.getElementById("text2bin").innerHTML = hex2bin(y);
 document.getElementById("key2bin").innerHTML = hex2bin(key);
-
+document.getElementById("printArr").innerHTML = des(hex2bin(y),hex2bin(key));
+//des(hex2bin(y),hex2bin(key));
 document.getElementById("bin2hex").innerHTML = bin2hex(hex2bin(y));
+document.getElementById("binkey2hex").innerHTML = bin2hex(hex2bin(key));
+
 document.getElementById("bin2text").innerHTML = hex2text(bin2hex(hex2bin(y)));
-function myFunction(str) {
-	var values, fLen, i;
-	values = [];
-	bin=[];
-	fLen = str.length;
-	for (i = 0; i < fLen; i++) {
-		values.push(str.charCodeAt(i));
-	}
-	document.getElementById("demo").innerHTML = values;
-}
+
 function text2hex(str) {
     var hex = '';
     var hexPadding, hexLen, i;
@@ -62,6 +56,13 @@ function text2hex(str) {
 function hexPadSize(strLenght){
 	var n=0;
 	while(((strLenght+n)*4)%64!=0){
+		n+=1;
+		}
+	return n;
+}
+function binPadSize(strLenght){
+	var n=0;
+	while((strLenght+n)%64!=0){
 		n+=1;
 		}
 	return n;
@@ -84,6 +85,12 @@ function hex2bin(hexstr){
 	var i,j;
 	var hex = hexstr.toLowerCase();
 	var hexLen = hex.length;
+	//hexLen = hex.length;
+    var hexPadding = hexPadSize(hexLen);
+    for (i=0; i<hexPadding; i++) {
+      hex += 0;
+    }
+    hexLen = hexLen+hexPadding;
 	for (i=0; i<hexLen; i++) {
     	dec.push(hex2dec(hex[i]));
     } 
@@ -117,64 +124,120 @@ function bin2dec(binarr){
 	}
 	return decarr;
 }
-function printArr(arr){
-	var txt = "";
-	arr.forEach(myFunctionTxt);
-	document.getElementById("printArr").innerHTML = txt;
 
+/*
+function shift(arr, n){
+ 	tmp1,tmp2,tmp3;
+	tmp1=arr[0];
+	tmp2=arr[1];
+	tmp3=arr[27];
+	for( k=0;k<26;k++){
+		arr[k]=arr[k+n];
+	}
+	if(n==2){
+		arr[26]=tmp1;
+		arr[27]=tmp2;
+	}
+	else if(n==1){
+		arr[27]=tmp1;
+		arr[26]=tmp3;
+	}
 }
-function myFunctionTxt(value, index, array) {
-  txt = txt + value + "<br>"; 
+function deshift(arr, n){
+	tmp1,tmp2,tmp3;
+	tmp1=arr[0];
+	tmp2=arr[26];
+	tmp3=arr[27];
+	for( k=25;k>=0;k--){
+		arr[k+n]=arr[k];
+	}
+	if(n==2){
+		arr[0]=tmp2;
+		arr[1]=tmp3;
+	}
+	else if(n==1){
+		arr[27]=tmp2;
+		arr[0]=tmp3;
+	}
 }
+function xorfunc( arr1,  arr2, arr3,  n){
+	for( i=0;i<n;i++){
+		if(((arr1[i]==1) or (arr2[i]==1))&& (arr1[i]!= arr2[i])){
+			arr3[i]=1;
+		}
+		else{
+			arr3[i]=0;
+		}
+	}
+}
+
+function permutation( n, arr1,  arr2,  arrp){
+ 	for(var i=0;i<n;i++){
+		arr2[i] = arr1[arrp[i]-1];
+	}
+}
+function dectobin( dec, bin){
+ 	tmp=dec;
+	for( i=3;i>=0;i--){
+		bin[i]=tmp%2;
+		tmp=tmp/2;
+	}
+}
+function split(arr, arr1, arr2,  n){
+	for( i=0;i<n;i++){
+		arr1[i]=arr[i];
+		arr2[i]=arr[i+n];
+	}
+}*/
 function des(binTxt, binKey){
 	var ip = [58,50,42,34,26,18,10,2,60,52,44,36,28,20,12,4,
               62,54,46,38,30,22,14,6,64,56,48,40,32,24,16,8,
               57,49,41,33,25,17, 9,1,59,51,43,35,27,19,11,3,
               61,53,45,37,29,21,13,5,63,55,47,39,31,23,15,7];
-    var kp= [57,49,41,33,25,17, 9, 1,58,50,42,34,26,18,
-             10, 2,59,51,43,35,27,19,11, 3,60,52,44,36,
-             63,55,47,39,31,23,15, 7,62,54,46,38,30,22,
-             14, 6,61,53,45,37,29,21,13, 5,28,20,12,4];
+    var kp = [57,49,41,33,25,17, 9, 1,58,50,42,34,26,18,
+              10, 2,59,51,43,35,27,19,11, 3,60,52,44,36,
+              63,55,47,39,31,23,15, 7,62,54,46,38,30,22,
+              14, 6,61,53,45,37,29,21,13, 5,28,20,12,4];
     var bsh = [1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1];
     var debsh = [0,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1];
-    var cp = [14,17,11,24,1,5,3,28,15,6,21,10,
-              23,19,12,4,26,8,16,7,27,20,13,2,
+    var cp = [14,17,11,24, 1, 5,3,28,15,6,21,10,
+              23,19,12, 4,26, 8,16, 7,27,20,13, 2,
               41,52,31,37,47,55,30,40,51,45,33,48,
               44,49,39,56,34,53,46,42,50,36,29,32];
     var ep = [32, 1, 2, 3, 4, 5, 4, 5, 6, 7, 8, 9,
     		   8, 9,10,11,12,13,12,13,14,15,16,17,
     		  16,17,18,19,20,21,20,21,22,23,24,25,
-    		  24,25,26,27,28,29,28,29,30,31,32,1];
+    		  24,25,26,27,28,29,28,29,30,31,32, 1];
 
     var fp = [40,8,48,16,56,24,64,32,39,7,47,15,55,23,63,31,
               38,6,46,14,54,22,62,30,37,5,45,13,53,21,61,29,
               36,4,44,12,52,20,60,28,35,3,43,11,51,19,59,27,
               34,2,42,10,50,18,58,26,33,1,41, 9,49,17,57,25];
 
-    var sbox1=[[14,4,13,1,2,15,11,8,3,10,6,12,5,9,0,7],
-               [0,15,7,4,14,2,13,1,10,6,12,11,9,5,3,8],
-               [4,1,14,8,13,6,2,11,15,12,9,7,3,10,5,0],
-               [15,12,8,2,4,9,1,7,5,11,3,14,10,0,6,13]];
+    var sbox1 = [[14, 4,13,1, 2,15,11, 8, 3,10, 6,12, 5, 9,0, 7],
+                 [ 0,15, 7,4,14, 2,13, 1,10, 6,12,11, 9, 5,3, 8],
+                 [ 4, 1,14,8,13, 6, 2,11,15,12, 9, 7, 3,10,5, 0],
+                 [15,12, 8,2, 4, 9, 1, 7, 5,11, 3,14,10, 0,6,13]];
 
-    var sbox2=[[15,1,8,14,6,11,3,4,9,7,2,13,12,0,5,10],
-               [ 3,13,4,7,15,2,8,14,12,0,1,10,6,9,11,5],
-               [0,14,7,11,10,4,13,1,5,8,12,6,9,3,2,15],
-               [13,8,10,1,3,15,4,2,11,6,7,12,0,5,14,9]];
+    var sbox2 = [[15, 1, 8,14, 6,11, 3, 4, 9,7, 2,13,12,0, 5,10],
+                 [ 3,13, 4, 7,15, 2, 8,14,12,0, 1,10, 6,9,11, 5],
+                 [ 0,14, 7,11,10, 4,13, 1, 5,8,12, 6, 9,3, 2,15],
+                 [13, 8,10, 1, 3,15, 4, 2,11,6, 7,12, 0,5,14, 9]];
 
-    var sbox3=[[10,0,9,14,6,3,15,5,1,13,12,7,11,4,2,8],
-               [13,7,0,9,3,4,6,10,2,8,5,14,12,11,15,1],
-               [13,6,4,9,8,15,3,0,11,1,2,12,5,10,14,7],
-               [1,10,13,0,6,9,8,7,4,15,14,3,11,5,2,12]];
+    var sbox3 = [[10,0,9,14,6,3,15,5,1,13,12,7,11,4,2,8],
+                 [13,7,0,9,3,4,6,10,2,8,5,14,12,11,15,1],
+                 [13,6,4,9,8,15,3,0,11,1,2,12,5,10,14,7],
+                 [1,10,13,0,6,9,8,7,4,15,14,3,11,5,2,12]];
 
-    var sbox4=[[7,13,14,3,0,6,9,10,1,2,8,5,11,12,4,15],
-               [13,8,11,5,6,15,0,3,4,7,2,12,1,10,14,9],
-               [10,6,9,0,12,11,7,13,15,1,3,14,5,2,8,4],
-               [3,15,0,6,10,1,13,8,9,4,5,11,12,7,2,14]];
+    var sbox4 = [[ 7,13,14,3, 0,6,9,10,1,2,8,5,11,12,4,15],
+                 [13, 8,11,5, 6,15,0,3,4,7,2,12,1,10,14,9],
+                 [10, 6, 9,0,12,11,7,13,15,1,3,14,5,2,8,4],
+                 [ 3,15, 0,6,10,1,13,8,9,4,5,11,12,7,2,14]];
 
-    var sbox5=[[2,12,4,1,7,10,11,6,8,5,3,15,13,0,14,9],
-               [14,11,2,12,4,7,13,1,5,0,15,10,3,9,8,6],
-               [4,2,1,11,10,13,7,8,15,9,12,5,6,3,0,14],
-               [11,8,12,7,1,14,2,13,6,15,0,9,10,4,5,3]];
+    var sbox5 = [[ 2,12, 4, 1, 7,10,11, 6, 8, 5, 3,15,13,0,14, 9],
+                 [14,11, 2,12, 4, 7,13, 1, 5, 0,15,10, 3,9, 8, 6],
+                 [ 4, 2, 1,11,10,13, 7, 8,15, 9,12, 5, 6,3, 0,14],
+                 [11, 8,12, 7, 1,14, 2,13, 6,15, 0, 9,10,4, 5, 3]];
 
     var sbox6=[[12,1,10,15,9,2,6,8,0,13,3,4,14,7,5,11],
                [10,15,4,2,7,12,9,5,6,1,13,14,0,11,3,8],
@@ -191,22 +254,221 @@ function des(binTxt, binKey){
                [7,11,4,1,9,12,14,2,0,6,10,13,15,3,5,8],
                [2,1,14,7,4,10,8,13,15,12,9,0,3,5,6,11]];
 
-    var pbox=[16,7,20,21,29,12,28,17,1,15,23,26,5,18,31,10,
-                    2,8,24,14,32,27,3,9,19,13,30,6,22,11,4,25];
-                    
+    var pbox=[16,7,20,21,29,12,28,17,1,15,23,26,5,18,31,10,2,8,24,14,32,27,3,9,19,13,30,6,22,11,4,25];              
     var r = [];
 	var l = [];
 	var i;
 	var c = [];
 	var d = [];
-	var txtLen=(binTxt.lenght)/2;
-	for (i=0;i<txtLen;i++){
-		r[i]=binTxt[i];
-		l[i]=binText[txtLen+i];
-	}
-	
-}
 
+	//binTxt.forEach(
+	//var txtLen=(binTxt.lenght)/2;
+
+	//document.getElementById("demo").innerHTML = binm.toString();
+	return binKey;
+}
+/*	
+	///cpp code
+function main(){
+	var keyfsh = [];
+    var kpkeyl=[];
+    var kpkeyr=[];
+    var test1=[];
+    var test2=[];
+    var kpkey=[];
+    var fkey=[];
+    var cpkey=[];
+    var rnexp=[];
+    var bvarmp=[];
+    var sbox=[];
+    var xbox=[];
+    var dekey=[];
+    var key=[];
+    var plain=[];
+    var c;
+    var m=0;
+//plain="<<endl;
+    for(var i=0;i<64;i++)
+    {
+        cout<<plain[i];
+    }
+    var ipplain=[];
+    var cypher=[];
+    var exp=[];
+    var rn=[];
+    var ln=[];
+    var rn1=[];
+    var ln1=[];
+    var tmp;
+    var row;
+    var col;
+    var stmp;
+    var ctmp;
+    var i=0,j=0;
+    ///Initial permutation
+    permutation(64, plain, ipplain, ip);
+    ///key permutationS
+    permutation(56, key, kpkey, kp);
+    ///split key
+    split(kpkey,kpkeyl,kpkeyr,28);
+    ///function F
+    for(i=0;i<16;i++){
+        ///split varo L and R
+        split(ipplain,ln,rn,32);
+        ///l(n+1)
+        for(j=0;j<32;j++){
+            ln1[j]=rn[j];
+        }
+        ///bit shift
+        shift(kpkeyl,bsh[i]);
+        shift(kpkeyr,bsh[i]);
+        for(j=0;j<28;j++){
+            fkey[j]=kpkeyl[j];
+            fkey[j+28]=kpkeyr[j];
+        }
+		///fkey compression permutation
+		permutation(48, fkey, cpkey, cp);
+		///Expantion Permutation
+ 		permutation(48, rn, rnexp, ep);
+ 		/// XOR (RNEXP,CPKEY)
+ 		xorfunc(rnexp,cpkey,exp,48);
+     	///Sbox substitution
+        ctmp=0;
+        for(j=0;j<48;j=j+6){
+            row=exp[j]*2+exp[j+5];
+            col=8*exp[j+1]+4*exp[j+2]+2*exp[j+3]+exp[j+4];
+            stmp=0;
+            if(j==0)stmp=sbox1[row][col];
+            if(j==6)stmp=sbox2[row][col];
+            if(j==12)stmp=sbox3[row][col];
+            if(j==18)stmp=sbox4[row][col];
+            if(j==24)stmp= sbox5[row][col];
+            if(j==30)stmp= sbox6[row][col];
+            if(j==36)stmp=sbox7[row][col];
+            if(j==42)stmp=sbox8[row][col];
+            dectobin(stmp,bvarmp);
+            for(var k=0;k<4;k++){
+                sbox[ctmp+k]=bvarmp[k];
+            }
+            ctmp=ctmp+4;
+        }///Sbox substitution END
+
+        ///Pbox permutation
+        permutation(32, sbox, xbox, pbox);
+
+        /// XOR(xbox,ln)
+        xorfunc(xbox,ln,rn1,32);
+
+        ///new ipplain
+        for(j=0;j<32;j++){
+            ipplain[j]=ln1[j];
+            ipplain[j+32]=rn1[j];
+        }
+	}///function F end
+    for(j=0;j<32;j++){
+            ipplain[j]=rn1[j];
+            ipplain[j+32]=ln1[j];
+    }
+    ///Final permutation
+    permutation(64, ipplain,cypher , fp);
+    permutation(64, test1,test2 , fp);
+    cout<<"key="<<endl;
+    for(i=0;i<64;i++){
+        cout<<key[i];
+    }
+    cout<<endl;
+    cout<<endl;
+    cout<<"cypher text="<<endl;
+    for(i=0;i<64;i++){
+        cout<<cypher[i];
+        plain[i]=cypher[i];///decryp
+        dekey[i]=key[i];
+    }
+    ///Decryption
+    ///Initial permutation
+    permutation(64, plain, ipplain, ip);
+    ///key permutationS
+
+    ///reverse keys
+    for(i=0;i<56;i++){
+        key[i]=fkey[i];
+    }
+	///split key
+    split(key,kpkeyl,kpkeyr,28);
+    ///function F
+    for(i=0;i<16;i++){
+   		///split varo L and R
+        split(ipplain,ln,rn,32);
+        for(j=0;j<32;j++){
+            ln1[j]=rn[j];
+        }
+        ///bit shift
+        deshift(kpkeyl,debsh[i]);
+        deshift(kpkeyr,debsh[i]);
+        for(j=0;j<28;j++){
+            fkey[j]=kpkeyl[j];
+            fkey[j+28]=kpkeyr[j];
+        }
+		///fkey compression permutation
+ 		permutation(48, fkey, cpkey, cp);
+
+		///Expantion Permutation
+ 		permutation(48, rn, rnexp, ep);
+ 		/// XOR (RNEXP,CPKEY)
+ 		xorfunc(rnexp,cpkey,exp,48);
+     	///Sbox substitution
+        ctmp=0;
+        for(j=0;j<48;j=j+6){
+            row=exp[j]*2+exp[j+5];
+            col=8*exp[j+1]+4*exp[j+2]+2*exp[j+3]+exp[j+4];
+            stmp=0;
+            if(j==0)stmp=sbox1[row][col];
+            if(j==6)stmp=sbox2[row][col];
+            if(j==12)stmp=sbox3[row][col];
+            if(j==18)stmp=sbox4[row][col];
+            if(j==24)stmp= sbox5[row][col];
+            if(j==30)stmp= sbox6[row][col];
+            if(j==36)stmp=sbox7[row][col];
+            if(j==42)stmp=sbox8[row][col];
+            dectobin(stmp,bvarmp);
+            for(var k=0;k<4;k++)
+            {
+                sbox[ctmp+k]=bvarmp[k];
+            }
+            ctmp=ctmp+4;
+        }///Sbox substitution END
+
+        ///Pbox permutation
+        permutation(32, sbox, xbox, pbox);
+
+        /// XOR(xbox,ln)
+
+        xorfunc(xbox,ln,rn1,32);
+
+		///new ipplain
+        for(j=0;j<32;j++){
+            ipplain[j]=ln1[j];
+            ipplain[j+32]=rn1[j];
+        }
+    }///function F end
+    for(j=0;j<32;j++){
+    	ipplain[j]=rn1[j];
+        ipplain[j+32]=ln1[j];
+    }
+    ///Final permutation
+    permutation(64, ipplain,cypher , fp);
+    cout<<endl;
+    cout<<endl;
+    cout<<"decryp plain="<<endl;
+    for(i=0;i<64;i++){
+        cout<<cypher[i];
+    }
+    cout<<endl;
+    fout.close();
+    return 0;
+}
+	
+*/
 </script>
 
 </body>
