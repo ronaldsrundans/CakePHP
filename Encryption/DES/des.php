@@ -133,29 +133,17 @@ function bin2dec(binarr){
 	}
 	return decarr;
 }
-
-/*
-
-function deshift(arr, n){
-	tmp1,tmp2,tmp3;
-	tmp1=arr[0];
-	tmp2=arr[26];
-	tmp3=arr[27];
-	for( k=25;k>=0;k--){
-		arr[k+n]=arr[k];
-	}
-	if(n==2){
-		arr[0]=tmp2;
-		arr[1]=tmp3;
-	}
-	else if(n==1){
-		arr[27]=tmp2;
-		arr[0]=tmp3;
-	}
+function dec2bin(dec, binarr){
+	var tmp=dec;
+    for(var i=3;i>=0;i--)
+    {
+        binarr[i]=tmp%2;
+        tmp=parseInt(tmp/2);
+    }
+    
+	//return dec;
 }
 
-
-*/
 function xorFunction( arr1,  arr2, arr3,  n){
 	for( i=0;i<n;i++){
 		if(((arr1[i]==1) | (arr2[i]==1))& (arr1[i]!= arr2[i])){
@@ -255,7 +243,9 @@ function des(binTxt, binKey){
     var pbox=[16,7,20,21,29,12,28,17,1,15,23,26,5,18,31,10,2,8,24,14,32,27,3,9,19,13,30,6,22,11,4,25];              
     var rn = [];
 	var ln = [];
-	var i;
+	var rn1 = [];
+	var ln1 = [];
+	var i, j, k;
 	var c = [];
 	var d = [];
 	var ipTxt=[];
@@ -267,12 +257,21 @@ function des(binTxt, binKey){
 	var xorExp=[];
 	var rnExp=[];
 	var mLen=binTxt.length/2;
+	var row;
+	var col;
+	var stmp;
+	var bintmp=[];
+	var ctmp;
+	var sbox=[];
+	var xbox=[];
+	var pbox=[];
+	var cypherTxt=[];
     permutation(64, binTxt, ipTxt, ip);
     ///key permutationS
     permutation(56, binKey, kpKey, kp);
     splitArr(kpKey,kpKeyL,kpKeyR,28);
 	///F function
-	for(i=0; i<1; i++){//change to 16
+	for(i=0; i<16; i++){//change to 16
 		splitArr(ipTxt,ln,rn,32);
 		leftShift(kpKeyL,bsh[i]);
         leftShift(kpKeyR,bsh[i]);
@@ -287,214 +286,63 @@ function des(binTxt, binKey){
  		/// XOR (RNEXP,CPKEY)
  		xorFunction(rnExp,cpKey,xorExp,48);
  		///Sbox substitution
- 		
-		
-	}
-	//document.getElementById("demo").innerHTML = rnExp;
-	return xorExp;
-}
-/*	
-	///cpp code
-function main(){
-	var keyfsh = [];
-    var kpkeyl=[];
-    var kpkeyr=[];
-    var test1=[];
-    var test2=[];
-    var kpkey=[];
-    var fkey=[];
-    var cpkey=[];
-    var rnexp=[];
-    var bvarmp=[];
-    var sbox=[];
-    var xbox=[];
-    var dekey=[];
-    var key=[];
-    var plain=[];
-    var c;
-    var m=0;
-//plain="<<endl;
-    for(var i=0;i<64;i++)
-    {
-        cout<<plain[i];
-    }
-    var ipplain=[];
-    var cypher=[];
-    var exp=[];
-    var rn=[];
-    var ln=[];
-    var rn1=[];
-    var ln1=[];
-    var tmp;
-    var row;
-    var col;
-    var stmp;
-    var ctmp;
-    var i=0,j=0;
-    ///Initial permutation
-    permutation(64, plain, ipplain, ip);
-    ///key permutationS
-    permutation(56, key, kpkey, kp);
-    ///split key
-    split(kpkey,kpkeyl,kpkeyr,28);
-    ///function F
-    for(i=0;i<16;i++){
-        ///split varo L and R
-        split(ipplain,ln,rn,32);
-        ///l(n+1)
-        for(j=0;j<32;j++){
-            ln1[j]=rn[j];
-        }
-        ///bit shift
-        shift(kpkeyl,bsh[i]);
-        shift(kpkeyr,bsh[i]);
-        for(j=0;j<28;j++){
-            fkey[j]=kpkeyl[j];
-            fkey[j+28]=kpkeyr[j];
-        }
-		///fkey compression permutation
-		permutation(48, fkey, cpkey, cp);
-		///Expantion Permutation
- 		permutation(48, rn, rnexp, ep);
- 		/// XOR (RNEXP,CPKEY)
- 		xorfunc(rnexp,cpkey,exp,48);
-     	///Sbox substitution
-        ctmp=0;
+ 		ctmp=0;
         for(j=0;j<48;j=j+6){
-            row=exp[j]*2+exp[j+5];
-            col=8*exp[j+1]+4*exp[j+2]+2*exp[j+3]+exp[j+4];
-            stmp=0;
-            if(j==0)stmp=sbox1[row][col];
-            if(j==6)stmp=sbox2[row][col];
-            if(j==12)stmp=sbox3[row][col];
-            if(j==18)stmp=sbox4[row][col];
-            if(j==24)stmp= sbox5[row][col];
-            if(j==30)stmp= sbox6[row][col];
-            if(j==36)stmp=sbox7[row][col];
-            if(j==42)stmp=sbox8[row][col];
-            dectobin(stmp,bvarmp);
-            for(var k=0;k<4;k++){
-                sbox[ctmp+k]=bvarmp[k];
+ 			row=xorExp[j]*2+xorExp[j+5];
+       		col=8*xorExp[j+1]+4*xorExp[j+2]+2*xorExp[j+3]+xorExp[j+4];
+       		stmp=0;
+    		if(j==0)stmp=sbox1[row][col]; 
+        	if(j==6)stmp=sbox2[row][col];
+        	if(j==12)stmp=sbox3[row][col];
+       	 	if(j==18)stmp=sbox4[row][col];
+        	if(j==24)stmp= sbox5[row][col];
+        	if(j==30)stmp= sbox6[row][col];
+        	if(j==36)stmp=sbox7[row][col];
+        	if(j==42)stmp=sbox8[row][col];
+        	/*switch(j){
+        	case 0:
+        		stmp=sbox1[row][col]; 
+        		break;
+        	case 6:
+        		stmp=sbox2[row][col];
+        		break;
+        	case 12:
+        	case 18:
+        	case 24:
+        	case 30:
+        	case 36:
+        	case 42:
+        	}*/
+        	dec2bin(stmp,bintmp);
+        	for(k=0;k<4;k++)
+            {
+                sbox[ctmp+k]=bintmp[k];
             }
             ctmp=ctmp+4;
-        }///Sbox substitution END
-
+        }
         ///Pbox permutation
         permutation(32, sbox, xbox, pbox);
-
-        /// XOR(xbox,ln)
-        xorfunc(xbox,ln,rn1,32);
+		/// XOR(xbox,ln)
+        xorFunction(xbox,ln,rn1,32);
 
         ///new ipplain
-        for(j=0;j<32;j++){
-            ipplain[j]=ln1[j];
-            ipplain[j+32]=rn1[j];
+        for(j=0;j<32;j++)
+        {
+            ipTxt[j]=ln1[j];
+            ipTxt[j+32]=rn1[j];
         }
 	}///function F end
-    for(j=0;j<32;j++){
-            ipplain[j]=rn1[j];
-            ipplain[j+32]=ln1[j];
-    }
-    ///Final permutation
-    permutation(64, ipplain,cypher , fp);
-    permutation(64, test1,test2 , fp);
-    cout<<"key="<<endl;
-    for(i=0;i<64;i++){
-        cout<<key[i];
-    }
-    cout<<endl;
-    cout<<endl;
-    cout<<"cypher text="<<endl;
-    for(i=0;i<64;i++){
-        cout<<cypher[i];
-        plain[i]=cypher[i];///decryp
-        dekey[i]=key[i];
-    }
-    ///Decryption
-    ///Initial permutation
-    permutation(64, plain, ipplain, ip);
-    ///key permutationS
-
-    ///reverse keys
-    for(i=0;i<56;i++){
-        key[i]=fkey[i];
-    }
-	///split key
-    split(key,kpkeyl,kpkeyr,28);
-    ///function F
-    for(i=0;i<16;i++){
-   		///split varo L and R
-        split(ipplain,ln,rn,32);
-        for(j=0;j<32;j++){
-            ln1[j]=rn[j];
+	 for(j=0;j<32;j++)
+        {
+            ipTxt[j]=rn1[j];
+            ipTxt[j+32]=ln1[j];
         }
-        ///bit shift
-        deshift(kpkeyl,debsh[i]);
-        deshift(kpkeyr,debsh[i]);
-        for(j=0;j<28;j++){
-            fkey[j]=kpkeyl[j];
-            fkey[j+28]=kpkeyr[j];
-        }
-		///fkey compression permutation
- 		permutation(48, fkey, cpkey, cp);
-
-		///Expantion Permutation
- 		permutation(48, rn, rnexp, ep);
- 		/// XOR (RNEXP,CPKEY)
- 		xorfunc(rnexp,cpkey,exp,48);
-     	///Sbox substitution
-        ctmp=0;
-        for(j=0;j<48;j=j+6){
-            row=exp[j]*2+exp[j+5];
-            col=8*exp[j+1]+4*exp[j+2]+2*exp[j+3]+exp[j+4];
-            stmp=0;
-            if(j==0)stmp=sbox1[row][col];
-            if(j==6)stmp=sbox2[row][col];
-            if(j==12)stmp=sbox3[row][col];
-            if(j==18)stmp=sbox4[row][col];
-            if(j==24)stmp= sbox5[row][col];
-            if(j==30)stmp= sbox6[row][col];
-            if(j==36)stmp=sbox7[row][col];
-            if(j==42)stmp=sbox8[row][col];
-            dectobin(stmp,bvarmp);
-            for(var k=0;k<4;k++)
-            {
-                sbox[ctmp+k]=bvarmp[k];
-            }
-            ctmp=ctmp+4;
-        }///Sbox substitution END
-
-        ///Pbox permutation
-        permutation(32, sbox, xbox, pbox);
-
-        /// XOR(xbox,ln)
-
-        xorfunc(xbox,ln,rn1,32);
-
-		///new ipplain
-        for(j=0;j<32;j++){
-            ipplain[j]=ln1[j];
-            ipplain[j+32]=rn1[j];
-        }
-    }///function F end
-    for(j=0;j<32;j++){
-    	ipplain[j]=rn1[j];
-        ipplain[j+32]=ln1[j];
-    }
-    ///Final permutation
-    permutation(64, ipplain,cypher , fp);
-    cout<<endl;
-    cout<<endl;
-    cout<<"decryp plain="<<endl;
-    for(i=0;i<64;i++){
-        cout<<cypher[i];
-    }
-    cout<<endl;
-    fout.close();
-    return 0;
+        ///Final permutation
+        permutation(64, ipTxt,cypherTxt , fp);
+	//document.getElementById("demo").innerHTML = rn1.toString();
+	return ln1;
 }
-	
-*/
+
 </script>
 
 </body>
