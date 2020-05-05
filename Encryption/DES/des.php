@@ -262,9 +262,8 @@ function des(binTxt, binKey){
 	var stmp;
 	var bintmp=[];
 	var ctmp;
-	var sbox=[];
-	var xbox=[];
-	
+	var sbox = [];
+	var xbox = [];	
 	var cypherTxt=[];
     permutation(64, binTxt, ipTxt, ip);
     ///key permutationS
@@ -275,13 +274,13 @@ function des(binTxt, binKey){
 		splitArr(ipTxt,ln,rn,32);
 		for(j=0;j<32;j++)
         {
-            ln1[j]=rn[j];
+            ln1[j] = rn[j];
         }
 		leftShift(kpKeyL,bsh[i]);
         leftShift(kpKeyR,bsh[i]);
         for(j=0;j<28;j++){
-            fKey[j]=kpKeyL[j];
-            fKey[j+28]=kpKeyR[j];
+            fKey[j] = kpKeyL[j];
+            fKey[j+28] = kpKeyR[j];
         }
         ///fkey compression permutation
 		permutation(48, fKey, cpKey, cp);
@@ -290,7 +289,6 @@ function des(binTxt, binKey){
  		/// XOR (RNEXP,CPKEY)
  		xorFunction(rnExp,cpKey,xorExp,48);
  		///Sbox substitution
- 		
  		ctmp=0;
         for(j=0;j<48;j=j+6){
  			row=xorExp[j]*2+xorExp[j+5];
@@ -319,8 +317,7 @@ function des(binTxt, binKey){
         	case 42:
         	}*/
         	dec2bin(stmp,bintmp);
-        	for(k=0;k<4;k++)
-            {
+        	for(k=0;k<4;k++){
                 sbox[ctmp+k]=bintmp[k];
             }
             ctmp=ctmp+4;
@@ -329,25 +326,40 @@ function des(binTxt, binKey){
         permutation(32, sbox, xbox, pbox);
 		/// XOR(xbox,ln)
         xorFunction(xbox,ln,rn1,32);
-
-        ///new ipplain
-        for(j=0;j<32;j++)
-        {
+        ///new ipTxt
+        for(j=0;j<32;j++){
             ipTxt[j]=ln1[j];
             ipTxt[j+32]=rn1[j];
         }
 	}///function F end
-	 for(j=0;j<32;j++)
-        {
-            ipTxt[j]=rn1[j];
-            ipTxt[j+32]=ln1[j];
+	for(j=0;j<32;j++){
+		ipTxt[j]=rn1[j];
+        ipTxt[j+32]=ln1[j];
         }
-        ///Final permutation
-        permutation(64, ipTxt,cypherTxt , fp);
+    ///Final permutation
+    permutation(64, ipTxt,cypherTxt , fp);
 	//document.getElementById("demo").innerHTML = pbox.toString();
 	return cypherTxt;
 }
 
+function aesCypher(){
+	var invSubBytes=[['52', '09', '6a', 'd5', '30', '36', 'a5', '38', 'bf', '40', 'a3', '9e', '81', 'f3', 'd7', 'fb'], 
+					 ['7c', 'e3', '39', '82', '9b', '2f', 'ff', '87', '34', '8e', '43', '44', 'c4', 'de', 'e9', 'cb'], 
+					 ['54', '7b', '94', '32', 'a6', 'c2', '23', '3d', 'ee', '4c', '95', '0b', '42', 'fa', 'c3', '4e'], 
+					 ['08', '2e', 'a1', '66', '28', 'd9', '24', 'b2', '76', '5b', 'a2', '49', '6d', '8b', 'd1', '25'], 
+					 ['72', 'f8', 'f6', '64', '86', '68', '98', '16', 'd4', 'a4', '5c', 'cc', '5d', '65', 'b6', '92'], 
+					 ['6c', '70', '48', '50', 'fd', 'ed', 'b9', 'da', '5e', '15', '46', '57', 'a7', '8d', '9d', '84'], 
+					 ['90', 'd8', 'ab', '00', '8c', 'bc', 'd3', '0a', 'f7', 'e4', '58', '05', 'b8', 'b3', '45', '06'], 
+					 ['d0', '2c', '1e', '8f', 'ca', '3f', '0f', '02', 'c1', 'af', 'bd', '03', '01', '13', '8a', '6b'], 
+					 ['3a', '91', '11', '41', '4f', '67', 'dc', 'ea', '97', 'f2', 'cf', 'ce', 'f0', 'b4', 'e6', '73'], 
+					 ['96', 'ac', '74', '22', 'e7', 'ad', '35', '85', 'e2', 'f9', '37', 'e8', '1c', '75', 'df', '6e'], 
+					 ['47', 'f1', '1a', '71', '1d', '29', 'c5', '89', '6f', 'b7', '62', '0e', 'aa', '18', 'be', '1b'], 
+					 ['fc', '56', '3e', '4b', 'c6', 'd2', '79', '20', '9a', 'db', 'c0', 'fe', '78', 'cd', '5a', 'f4'], 
+					 ['1f', 'dd', 'a8', '33', '88', '07', 'c7', '31', 'b1', '12', '10', '59', '27', '80', 'ec', '5f'], 
+					 ['60', '51', '7f', 'a9', '19', 'b5', '4a', '0d', '2d', 'e5', '7a', '9f', '93', 'c9', '9c', 'ef'], 
+					 ['a0', 'e0', '3b', '4d', 'ae', '2a', 'f5', 'b0', 'c8', 'eb', 'bb', '3c', '83', '53', '99', '61'], 
+					 ['17', '2b', '04', '7e', 'ba', '77', 'd6', '26', 'e1', '69', '14', '63', '55', '21', '0c', '7d']];
+}
 </script>
 
 </body>
