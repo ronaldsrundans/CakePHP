@@ -240,7 +240,7 @@ function des(binTxt, binKey){
                [7,11,4,1,9,12,14,2,0,6,10,13,15,3,5,8],
                [2,1,14,7,4,10,8,13,15,12,9,0,3,5,6,11]];
 
-    var pbox=[16,7,20,21,29,12,28,17,1,15,23,26,5,18,31,10,2,8,24,14,32,27,3,9,19,13,30,6,22,11,4,25];              
+    var pbox = [16,7,20,21,29,12,28,17,1,15,23,26,5,18,31,10,2,8,24,14,32,27,3,9,19,13,30,6,22,11,4,25];              
     var rn = [];
 	var ln = [];
 	var rn1 = [];
@@ -264,7 +264,7 @@ function des(binTxt, binKey){
 	var ctmp;
 	var sbox=[];
 	var xbox=[];
-	var pbox=[];
+	
 	var cypherTxt=[];
     permutation(64, binTxt, ipTxt, ip);
     ///key permutationS
@@ -339,8 +339,8 @@ function des(binTxt, binKey){
         }
         ///Final permutation
         permutation(64, ipTxt,cypherTxt , fp);
-	//document.getElementById("demo").innerHTML = rn1.toString();
-	return ln1;
+	//document.getElementById("demo").innerHTML = pbox.toString();
+	return ipTxt;
 }
 
 </script>
