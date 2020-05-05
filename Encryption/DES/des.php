@@ -32,13 +32,13 @@ document.getElementById("text2hex").innerHTML = y;
 document.getElementById("key2hex").innerHTML = key;
 document.getElementById("text2bin").innerHTML = hex2bin(y);
 document.getElementById("key2bin").innerHTML = hex2bin(key);
-document.getElementById("printArr").innerHTML = des(hex2bin(y),hex2bin(key));
+document.getElementById("printArr").innerHTML = bin2hex(des(hex2bin(y),hex2bin(key)));
 //document.getElementById("printArr").innerHTML = myTest();
 //des(hex2bin(y),hex2bin(key));
-document.getElementById("bin2hex").innerHTML = bin2hex(hex2bin(y));
-document.getElementById("binkey2hex").innerHTML = bin2hex(hex2bin(key));
+//document.getElementById("bin2hex").innerHTML = bin2hex(hex2bin(y));
+//document.getElementById("binkey2hex").innerHTML = bin2hex(hex2bin(key));
 
-document.getElementById("bin2text").innerHTML = hex2text(bin2hex(hex2bin(y)));
+//document.getElementById("bin2text").innerHTML = hex2text(bin2hex(hex2bin(y)));
 function myTest(){
 const items = [1, 29, 47];
 const copy = [];
@@ -273,6 +273,10 @@ function des(binTxt, binKey){
 	///F function
 	for(i=0; i<16; i++){//change to 16
 		splitArr(ipTxt,ln,rn,32);
+		for(j=0;j<32;j++)
+        {
+            ln1[j]=rn[j];
+        }
 		leftShift(kpKeyL,bsh[i]);
         leftShift(kpKeyR,bsh[i]);
         for(j=0;j<28;j++){
@@ -286,6 +290,7 @@ function des(binTxt, binKey){
  		/// XOR (RNEXP,CPKEY)
  		xorFunction(rnExp,cpKey,xorExp,48);
  		///Sbox substitution
+ 		
  		ctmp=0;
         for(j=0;j<48;j=j+6){
  			row=xorExp[j]*2+xorExp[j+5];
@@ -340,7 +345,7 @@ function des(binTxt, binKey){
         ///Final permutation
         permutation(64, ipTxt,cypherTxt , fp);
 	//document.getElementById("demo").innerHTML = pbox.toString();
-	return ipTxt;
+	return cypherTxt;
 }
 
 </script>
