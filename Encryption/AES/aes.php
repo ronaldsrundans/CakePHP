@@ -26,20 +26,23 @@
 <script>
 var x = "Your lips are smoother than vaseline."
 var y = "0123456789ABCDEF";
-var key ="133457799BBCDFF1";
-var aeskey="2b7e151628aed2a6abf7158809cf4f3c"
+var plain = "Two One Nine Two";
+var key ="Thats my Kung Fu";
+var aeskey128="2b7e151628aed2a6abf7158809cf4f3c";
+var aeskey192="8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b";
+var aeskey256="603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4";
 var testarr=[[1,2,3,4],
 [2,3,4,0],
 [3,9,1,2],
 [4,1,2,3]];
-//document.getElementById("plaintext").innerHTML = x;
-document.getElementById("text2hex").innerHTML = y;
-document.getElementById("key2hex").innerHTML = key;
-document.getElementById("text2bin").innerHTML = hex2bin(y);
-document.getElementById("key2bin").innerHTML = hex2bin(key);
+document.getElementById("plaintext").innerHTML = plain;
+document.getElementById("text2hex").innerHTML = text2hex(plain);
+document.getElementById("key2hex").innerHTML = text2hex(key);
+document.getElementById("text2bin").innerHTML = hex2bin(text2hex(plain));
+document.getElementById("key2bin").innerHTML = hex2bin(text2hex(key));
 //document.getElementById("printArr").innerHTML = bin2hex(des(hex2bin(y),hex2bin(key)));
 //document.getElementById("printArr").innerHTML = testarr;
-document.getElementById("printArr").innerHTML = keyExpansion(aeskey);
+document.getElementById("printArr").innerHTML = keyExpansion(aeskey256);
 
 //document.getElementById("printArr").innerHTML = myTest();
 //des(hex2bin(y),hex2bin(key));
@@ -61,16 +64,16 @@ function text2hex(str) {
     }
     return hex;
   }
-function hexPadSize(strLenght){
+function hexPadSize(strLength){
 	var n=0;
-	while(((strLenght+n)*4)%64!=0){
+	while(((strLength+n)*4)%64!=0){
 		n+=1;
 		}
 	return n;
 }
-function binPadSize(strLenght){
+function binPadSize(strLength){
 	var n=0;
-	while((strLenght+n)%64!=0){
+	while((strLength+n)%64!=0){
 		n+=1;
 		}
 	return n;
@@ -93,12 +96,11 @@ function hex2bin(hexstr){
 	var i,j;
 	var hex = hexstr.toLowerCase();
 	var hexLen = hex.length;
-	//hexLen = hex.length;
-    var hexPadding = hexPadSize(hexLen);
-    for (i=0; i<hexPadding; i++) {
-      hex += 0;
+  /*var hexPadding = hexPadSize(hexLen);
+  for (i=0; i<hexPadding; i++) {
+    hex += 0;
     }
-    hexLen = hexLen+hexPadding;
+    hexLen = hexLen+hexPadding;*/
 	for (i=0; i<hexLen; i++) {
     	dec.push(hex2dec(hex[i]));
     }
@@ -387,8 +389,20 @@ function mixColumns(){
 function invMixColumns(){
 
 }
-function keyExpansion(binKey){
-    return binKey;
+function keyExpansion(hexKey){
+  var i=0;///dec
+  var nk=hexKey.length/8;
+  var rCon=i/nk;
+  w=[];
+  testarr=[1,2,3,4];
+  testarr2=[5,6,7,8]
+  for(i=0;i<nk;i++){
+    w.push(hexKey.slice(i*8,(i+1)*8));
+  }
+
+  //w.push(hexKey.slice(0, 7));
+
+  return i;
 }
 </script>
 
